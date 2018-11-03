@@ -53,7 +53,9 @@ class ViewController: UIViewController {
             sender.setTitleColor(.blue, for: .normal)
             if ball2Button.isEnabled == false {
                 strikeButton.isEnabled = false
-                currentFrame.ball1Pins.append(sender.tag)
+                if currentFrame.ball1Pins.contains(sender.tag) == false {
+                    currentFrame.ball1Pins.append(sender.tag)
+                }
             } else {
                 currentFrame.ball2Pins.append(sender.tag)
             }
