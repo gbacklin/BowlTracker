@@ -53,9 +53,7 @@ class ViewController: UIViewController {
             sender.setTitleColor(.blue, for: .normal)
             if ball2Button.isEnabled == false {
                 strikeButton.isEnabled = false
-                if currentFrame.ball1Pins.contains(sender.tag) == false {
-                    currentFrame.ball1Pins.append(sender.tag)
-                }
+                currentFrame.ball1Pins.append(sender.tag)
             } else {
                 currentFrame.ball2Pins.append(sender.tag)
             }
@@ -556,6 +554,8 @@ class ViewController: UIViewController {
         spareButton.isEnabled = false
         strikeButton.isEnabled = true
         
+        currentFrame.ball1Pins.removeAll()
+
         for bowlingPin in bowlingPins {
             bowlingPin.setTitleColor(.red, for: .normal)
         }
@@ -666,15 +666,15 @@ extension ViewController: UICollectionViewDataSource {
                     cell.ball2ResultLabel.text = ""
                     cell.ball3ResultLabel.text = ""
                 } else if subFrame!.isSpare {
-                    cell.ball1ResultLabel.text = "\(10 - frame.ball1Pins.count)"
+                    cell.ball1ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                     cell.ball2ResultLabel.text = "/"
                     cell.ball3ResultLabel.text = ""
                 } else {
-                    cell.ball1ResultLabel.text = "\(10 - frame.ball1Pins.count)"
-                    if (10 - (10 - (frame.ball1Pins.count - frame.ball2Pins.count))) == 0 {
+                    cell.ball1ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
+                    if (10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count))) == 0 {
                         cell.ball2ResultLabel.text = "-"
                     } else {
-                        cell.ball2ResultLabel.text = "\(10 - (10 - (frame.ball1Pins.count - frame.ball2Pins.count)))"
+                        cell.ball2ResultLabel.text = "\(10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count)))"
                     }
                     cell.ball3ResultLabel.text = ""
                 }
@@ -688,20 +688,20 @@ extension ViewController: UICollectionViewDataSource {
                     cell.ball3ResultLabel.text = ""
                 } else if subFrame!.isSpare {
                     cell.ball1ResultLabel.text = "X"
-                    cell.ball2ResultLabel.text = "\(10 - frame.ball1Pins.count)"
+                    cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                     cell.ball3ResultLabel.text = "/"
                 } else {
                     let previousFrame = subFrame!.previousFrame
                     if previousFrame!.isSpare {
                         cell.ball1ResultLabel.text = "\(10 - previousFrame!.ball1Pins.count)"
                         cell.ball2ResultLabel.text = "/"
-                        cell.ball3ResultLabel.text = "\(10 - frame.ball1Pins.count)"
+                        cell.ball3ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                     } else {
-                        cell.ball2ResultLabel.text = "\(10 - frame.ball1Pins.count)"
-                        if (10 - (10 - (frame.ball1Pins.count - frame.ball2Pins.count))) == 0 {
+                        cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
+                        if (10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count))) == 0 {
                             cell.ball3ResultLabel.text = "-"
                         } else {
-                            cell.ball3ResultLabel.text = "\(10 - (10 - (frame.ball1Pins.count - frame.ball2Pins.count)))"
+                            cell.ball3ResultLabel.text = "\(10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count)))"
                         }
                     }
                 }
@@ -719,12 +719,12 @@ extension ViewController: UICollectionViewDataSource {
                     }
                 } else if subFrame!.isSpare {
                     cell.ball1ResultLabel.text = "X"
-                    cell.ball2ResultLabel.text = "\(10 - frame.ball1Pins.count)"
+                    cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                     cell.ball3ResultLabel.text = "/"
                 } else {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "X"
-                    cell.ball3ResultLabel.text = "\(10 - frame.ball1Pins.count)"
+                    cell.ball3ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                 }
                 break
             default:
