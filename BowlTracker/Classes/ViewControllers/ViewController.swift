@@ -453,11 +453,11 @@ class ViewController: UIViewController {
             currentGame.append(frame)
             currentFrame = Frame()
             currentFrame.frameNumber = frame.frameNumber + 1
-            title = "Frame \(currentFrame.frameNumber)"
+            title = "Game \(series.count + 1) - Frame \(currentFrame.frameNumber)"
         } else {
             let subFrame = 10 + frame.tenthFrame.count
             if subFrame < 13 {
-                title = "Frame \(subFrame)"
+                title = "Game \(series.count + 1) - Frame \(subFrame)"
                 
                 switch subFrame {
                 case 10:
@@ -570,7 +570,7 @@ class ViewController: UIViewController {
     func newGame() {
         currentFrame = Frame()
         currentFrame.frameNumber = 1
-        title = "Frame \(currentFrame.frameNumber)"
+        title = "Game \(series.count + 1) - Frame \(currentFrame.frameNumber)"
         isGameCompleted = false
         resetPins()
     }
@@ -579,7 +579,7 @@ class ViewController: UIViewController {
         currentGame.append(frame)
         currentFrame = Frame()
         currentFrame.frameNumber = frame.frameNumber + 1
-        title = "Frame \(currentFrame.frameNumber)"
+        title = "Game \(series.count + 1) - Frame \(currentFrame.frameNumber)"
     }
     
     func endGame() {
