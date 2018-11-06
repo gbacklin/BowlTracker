@@ -306,7 +306,12 @@ class ViewController: UIViewController {
         } else {
             switch frame.frameNumber {
             case 10:
-                frame.score += frame.ball1Pins.count - frame.ball2Pins.count
+                if frame.previousFrame!.isStrike {
+                    frame.previousFrame!.score += frame.ball1Pins.count - frame.ball2Pins.count
+                    frame.score += (frame.ball1Pins.count - frame.ball2Pins.count) * 2
+                } else {
+                    frame.score += frame.ball1Pins.count - frame.ball2Pins.count
+                }
                 
                 let firstFrame = currentGame[0]
                 firstFrame.finalScore = frame.score
