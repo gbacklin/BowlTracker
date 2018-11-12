@@ -101,6 +101,7 @@
                                                 </label>
                                             </subviews>
                                         </view>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="urQ-iu-9Zu" secondAttribute="trailing" constant="15" id="95n-r6-eeI"/>
                                             <constraint firstItem="urQ-iu-9Zu" firstAttribute="leading" secondItem="9ps-C1-uQN" secondAttribute="leading" constant="15" id="98p-Yh-IHY"/>
@@ -342,9 +343,14 @@
                         <viewLayoutGuide key="safeArea" id="lNm-65-HgP"/>
                     </view>
                     <navigationItem key="navigationItem" title="BowlTracker" id="e3P-fI-eCq">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="yo5-df-3ge">
+                        <barButtonItem key="leftBarButtonItem" title="New Series" id="yo5-df-3ge">
                             <connections>
                                 <action selector="startNewSeries:" destination="a4y-V9-8WZ" id="vkn-hY-5lf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Restart" id="QOw-3g-yig">
+                            <connections>
+                                <action selector="restartGame:" destination="a4y-V9-8WZ" id="KNr-K3-VLk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -353,6 +359,7 @@
                         <outlet property="ball2Button" destination="P9W-vD-FtG" id="Z3c-rJ-web"/>
                         <outlet property="collectionView" destination="Oto-Tt-cbl" id="fKs-uT-Ktp"/>
                         <outlet property="pinStackView" destination="KjB-Ch-Xou" id="Jqh-l6-nre"/>
+                        <outlet property="restartBarButtonItem" destination="QOw-3g-yig" id="nhZ-ME-GCi"/>
                         <outlet property="spareButton" destination="4Kl-le-2CV" id="Sd6-us-Hts"/>
                         <outlet property="strikeButton" destination="POb-KJ-fbX" id="bia-c8-gEA"/>
                     </connections>

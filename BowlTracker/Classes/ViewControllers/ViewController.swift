@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var spareButton: UIButton!
     @IBOutlet weak var strikeButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var restartBarButtonItem: UIBarButtonItem!
     
     var bowlingPins: [UIButton] = [UIButton]()
     var currentFrame: Frame = Frame()
@@ -36,7 +37,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         initializePinArray(subviews: pinStackView)
-        
+        restartBarButtonItem.title = "Restart"
         newGame()
     }
     
@@ -113,6 +114,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startNewSeries(_ sender: UIBarButtonItem) {
+        restartBarButtonItem.title = "Restart"
         currentFrame = Frame()
         currentGame.removeAll()
         isTenthFrame = false
@@ -122,6 +124,26 @@ class ViewController: UIViewController {
         newGame()
         updateScoreDisplay()
     }
+    
+    @IBAction func restartGame(_ sender: Any) {
+        let alert = UIAlertController(title: "New Game", message: "Selecting yes, will remove all frames from this game.", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {[weak self] (action) in
+            self!.currentFrame = Frame()
+            self!.currentGame.removeAll()
+            self!.isTenthFrame = false
+            self!.isGameCompleted = false
+            
+            self!.newGame()
+            self!.updateScoreDisplay()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+   }
+    
     // MARK: - Ball thrown methods
     
     
@@ -620,6 +642,8 @@ class ViewController: UIViewController {
             let game2Score = game2[0].finalScore
             let game3Score = game3[0].finalScore
             title = "\(game1Score) \(game2Score) \(game3Score) series (\(game1Score+game2Score+game3Score))"
+            restartBarButtonItem.title = ""
+
         }
     }
 
