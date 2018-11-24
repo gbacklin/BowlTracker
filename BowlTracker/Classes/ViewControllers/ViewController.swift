@@ -22,11 +22,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var spareButton: UIButton!
     @IBOutlet weak var strikeButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var restartBarButtonItem: UIBarButtonItem!
     
     var bowlingPins: [UIButton] = [UIButton]()
     var currentFrame: Frame = Frame()
     var currentGame: [Frame] = [Frame]()
+    var undoGame: [Frame] = [Frame]()
     var isTenthFrame = false
     var series: [[Frame]] = [[Frame]]()
     var isGameCompleted = false
@@ -37,7 +37,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         initializePinArray(subviews: pinStackView)
-        restartBarButtonItem.title = "Restart"
         newGame()
     }
     
@@ -113,39 +112,28 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func startNewSeries(_ sender: UIBarButtonItem) {
-        restartBarButtonItem.title = "Restart"
-        currentFrame = Frame()
-        currentGame.removeAll()
-        isTenthFrame = false
-        series.removeAll()
-        isGameCompleted = false
-        
-        newGame()
-        updateScoreDisplay()
-    }
-    
-    @IBAction func restartGame(_ sender: Any) {
-        let alert = UIAlertController(title: "New Game", message: "Selecting yes, will remove all frames from this game.", preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Yes", style: .default) {[weak self] (action) in
-            self!.currentFrame = Frame()
-            self!.currentGame.removeAll()
-            self!.isTenthFrame = false
-            self!.isGameCompleted = false
-            
-            self!.newGame()
-            self!.updateScoreDisplay()
+    @IBAction func promptForGameOption(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: "Reset one of the following or Cancel", preferredStyle: .actionSheet)
+//        let resetFrameAction = UIAlertAction(title: "Frame", style: .default) {[weak self] (action) in
+//            self!.resetCurrentFrame()
+//        }
+        let resetGameAction = UIAlertAction(title: "Game", style: .default) {[weak self] (action) in
+            self!.restartGame()
+        }
+        let resetSeriesAction = UIAlertAction(title: "Series", style: .default) {[weak self] (action) in
+            self!.startNewSeries()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+        //actionSheet.addAction(resetFrameAction)
+        actionSheet.addAction(resetGameAction)
+        actionSheet.addAction(resetSeriesAction)
+        actionSheet.addAction(cancelAction)
         
-        alert.addAction(yesAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
-   }
+        present(actionSheet, animated: true, completion: nil)
+    }
     
     // MARK: - Ball thrown methods
-    
     
     func firstBallThrown(frame: Frame) {
         if frame.frameNumber == 1 {
@@ -468,6 +456,13 @@ class ViewController: UIViewController {
     
     // MARK: - Frame Control methods
     
+    func updateUndoGame() {
+        undoGame = [Frame]()
+        for tempGame in currentGame {
+            undoGame.append(tempGame)
+        }
+    }
+    
     func addNewFrameToGame(frame: Frame) {
         if frame.frameNumber < 10 {
             if frame.frameNumber > 1 {
@@ -477,6 +472,7 @@ class ViewController: UIViewController {
                 previousFrame.nextFrame = frame
                 currentGame[index] = previousFrame
             }
+            updateUndoGame()
             currentGame.append(frame)
             currentFrame = Frame()
             currentFrame.frameNumber = frame.frameNumber + 1
@@ -492,6 +488,7 @@ class ViewController: UIViewController {
                     tenthFrame.frameNumber = subFrame
                     
                     frame.tenthFrame.append(tenthFrame)
+                    updateUndoGame()
                     currentGame.append(frame)
                     break
                     
@@ -642,11 +639,64 @@ class ViewController: UIViewController {
             let game2Score = game2[0].finalScore
             let game3Score = game3[0].finalScore
             title = "\(game1Score) \(game2Score) \(game3Score) series (\(game1Score+game2Score+game3Score))"
-            restartBarButtonItem.title = ""
-
         }
     }
+    
+    // MARK: - Resetting methods
 
+    func resetCurrentFrame() {
+        currentFrame = Frame()
+        currentFrame.frameNumber = undoGame.count + 1
+        
+        currentGame = [Frame]()
+        for tempGame in undoGame {
+            currentGame.append(tempGame)
+        }
+        updateScoreDisplay()
+    }
+    
+    func restartGame() {
+        let alert = UIAlertController(title: "New Game", message: "Selecting yes, will remove all frames from this game.", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {[weak self] (action) in
+            self!.currentFrame = Frame()
+            self!.currentGame.removeAll()
+            self!.undoGame.removeAll()
+            self!.isTenthFrame = false
+            self!.isGameCompleted = false
+            
+            self!.newGame()
+            self!.updateScoreDisplay()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func startNewSeries() {
+        let alert = UIAlertController(title: "New Series", message: "Selecting yes, will remove all games from your series.", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {[weak self] (action) in
+            self!.currentFrame = Frame()
+            self!.currentGame.removeAll()
+            self!.undoGame.removeAll()
+            self!.isTenthFrame = false
+            self!.series.removeAll()
+            self!.isGameCompleted = false
+            
+            self!.newGame()
+            self!.updateScoreDisplay()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
+
+    }
+    
 }
 
 extension ViewController: UICollectionViewDataSource {
