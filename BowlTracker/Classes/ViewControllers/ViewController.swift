@@ -10,7 +10,7 @@ import UIKit
 
 enum ThrowType: Int {
     case ball1 = 0
-    case ball2 = 1
+    case open = 1
     case spare = 2
     case strike = 3
 }
@@ -83,18 +83,46 @@ class ViewController: UIViewController {
     @IBAction func ballThrown(_ sender: UIButton) {
         currentFrame.isStrike = false
         currentFrame.isSpare = false
+        processBallThrown(throwType: sender.tag, isFrameReset: false)
+    }
+    
+    @IBAction func promptForGameOption(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let resetFrameAction = UIAlertAction(title: "Reset Last Frame", style: .default) {[weak self] (action) in
+            self!.resetCurrentFrame()
+        }
+        let resetGameAction = UIAlertAction(title: "Reset Current Game", style: .default) {[weak self] (action) in
+            self!.restartGame()
+        }
+        let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
+            self!.startNewSeries()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
-        switch sender.tag {
+        actionSheet.addAction(resetFrameAction)
+        actionSheet.addAction(resetGameAction)
+        actionSheet.addAction(resetSeriesAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    // MARK: - Ball thrown methods
+    
+    func processBallThrown(throwType: Int, isFrameReset: Bool) {
+        switch throwType {
         case ThrowType.ball1.rawValue:
-            ball1Button.isEnabled = false
-            ball2Button.isEnabled = true
-            spareButton.isEnabled = true
-            strikeButton.isEnabled = false
+            if isFrameReset == false {
+                ball1Button.isEnabled = false
+                ball2Button.isEnabled = true
+                spareButton.isEnabled = true
+                strikeButton.isEnabled = false
+            }
             firstBallThrown(frame: currentFrame)
             for pin in currentFrame.ball1Pins {
                 currentFrame.ball2Pins.append(pin)
             }
-        case ThrowType.ball2.rawValue:
+        case ThrowType.open.rawValue:
             openFrame(frame: currentFrame)
         case ThrowType.spare.rawValue:
             currentFrame.isStrike = false
@@ -111,29 +139,6 @@ class ViewController: UIViewController {
             print("unknown")
         }
     }
-    
-    @IBAction func promptForGameOption(_ sender: Any) {
-        let actionSheet = UIAlertController(title: nil, message: "Reset one of the following or Cancel", preferredStyle: .actionSheet)
-//        let resetFrameAction = UIAlertAction(title: "Frame", style: .default) {[weak self] (action) in
-//            self!.resetCurrentFrame()
-//        }
-        let resetGameAction = UIAlertAction(title: "Game", style: .default) {[weak self] (action) in
-            self!.restartGame()
-        }
-        let resetSeriesAction = UIAlertAction(title: "Series", style: .default) {[weak self] (action) in
-            self!.startNewSeries()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-        //actionSheet.addAction(resetFrameAction)
-        actionSheet.addAction(resetGameAction)
-        actionSheet.addAction(resetSeriesAction)
-        actionSheet.addAction(cancelAction)
-        
-        present(actionSheet, animated: true, completion: nil)
-    }
-    
-    // MARK: - Ball thrown methods
     
     func firstBallThrown(frame: Frame) {
         if frame.frameNumber == 1 {
@@ -646,26 +651,44 @@ class ViewController: UIViewController {
 
     func resetCurrentFrame() {
         currentFrame = Frame()
-        currentFrame.frameNumber = undoGame.count + 1
         
         currentGame = [Frame]()
-        for tempGame in undoGame {
-            currentGame.append(tempGame)
+        currentFrame.frameNumber = currentGame.count + 1
+        if undoGame.count > 0 {
+            for tempFrame in undoGame {
+                if tempFrame.isStrike {
+                    processBallThrown(throwType: ThrowType.strike.rawValue, isFrameReset: true)
+                } else if tempFrame.isSpare {
+                    currentFrame.ball1Pins = tempFrame.ball1Pins
+                    processBallThrown(throwType: ThrowType.ball1.rawValue, isFrameReset: true)
+                    processBallThrown(throwType: ThrowType.spare.rawValue, isFrameReset: true)
+                } else {
+                    currentFrame.ball1Pins = tempFrame.ball1Pins
+                    processBallThrown(throwType: ThrowType.ball1.rawValue, isFrameReset: true)
+                    currentFrame.ball2Pins = tempFrame.ball2Pins
+                    processBallThrown(throwType: ThrowType.open.rawValue, isFrameReset: true)
+                }
+            }
+        } else {
+            removeAllFrmesInGame()
         }
+    }
+    
+    func removeAllFrmesInGame() {
+        currentFrame = Frame()
+        currentGame.removeAll()
+        undoGame.removeAll()
+        isTenthFrame = false
+        isGameCompleted = false
+        
+        newGame()
         updateScoreDisplay()
     }
     
     func restartGame() {
         let alert = UIAlertController(title: "New Game", message: "Selecting yes, will remove all frames from this game.", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) {[weak self] (action) in
-            self!.currentFrame = Frame()
-            self!.currentGame.removeAll()
-            self!.undoGame.removeAll()
-            self!.isTenthFrame = false
-            self!.isGameCompleted = false
-            
-            self!.newGame()
-            self!.updateScoreDisplay()
+            self!.removeAllFrmesInGame()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -825,4 +848,3 @@ extension ViewController: UICollectionViewDataSource {
 extension ViewController: UICollectionViewDelegate {
     
 }
-
