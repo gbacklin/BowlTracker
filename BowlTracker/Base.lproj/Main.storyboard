@@ -138,7 +138,7 @@
                                                     <constraint firstAttribute="width" constant="45" id="L7j-wu-bvP"/>
                                                     <constraint firstAttribute="height" constant="45" id="bLN-2Y-KJh"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="7"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="XuF-h1-pQY"/>
@@ -150,7 +150,7 @@
                                                     <constraint firstAttribute="height" constant="45" id="4Lv-2J-aGV"/>
                                                     <constraint firstAttribute="width" constant="45" id="UVq-en-GG7"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="8"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="RKY-OM-HTZ"/>
@@ -162,7 +162,7 @@
                                                     <constraint firstAttribute="height" constant="45" id="96F-Lc-4Zh"/>
                                                     <constraint firstAttribute="width" constant="45" id="WPU-g3-vOa"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="9"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="HTv-Q2-MQg"/>
@@ -174,7 +174,7 @@
                                                     <constraint firstAttribute="height" constant="45" id="IJh-Sg-OlV"/>
                                                     <constraint firstAttribute="width" constant="45" id="udH-6a-qoA"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="10"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="EU9-4g-jIt"/>
@@ -191,7 +191,7 @@
                                                     <constraint firstAttribute="height" constant="45" id="ACz-qh-Isu"/>
                                                     <constraint firstAttribute="width" constant="45" id="VYQ-vk-UG2"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="4"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="NEC-Wy-sBR"/>
@@ -203,7 +203,7 @@
                                                     <constraint firstAttribute="height" constant="45" id="QoW-IF-c7p"/>
                                                     <constraint firstAttribute="width" constant="45" id="hPP-lR-SEJ"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="5"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="IXW-w6-DO4"/>
@@ -215,7 +215,7 @@
                                                     <constraint firstAttribute="height" constant="45" id="3SQ-TJ-pht"/>
                                                     <constraint firstAttribute="width" constant="45" id="5nL-S9-qDB"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="6"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="Pej-8Z-bGE"/>
@@ -232,7 +232,7 @@
                                                     <constraint firstAttribute="width" constant="45" id="hEK-D8-FPU"/>
                                                     <constraint firstAttribute="height" constant="45" id="kRa-xY-Ghi"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="2"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="K3o-Jv-h0A"/>
@@ -244,7 +244,7 @@
                                                     <constraint firstAttribute="height" constant="45" id="9Q6-ON-mu0"/>
                                                     <constraint firstAttribute="width" constant="45" id="sgF-6w-cXu"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                 <state key="normal" title="3"/>
                                                 <connections>
                                                     <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="ohp-HN-EgE"/>
@@ -258,7 +258,7 @@
                                             <constraint firstAttribute="width" constant="45" id="eII-Au-ZEo"/>
                                             <constraint firstAttribute="height" constant="45" id="iWU-hb-X9o"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="1"/>
                                         <connections>
                                             <action selector="addPinsLeft:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="6u4-d8-RrL"/>
@@ -343,6 +343,11 @@
                         <viewLayoutGuide key="safeArea" id="lNm-65-HgP"/>
                     </view>
                     <navigationItem key="navigationItem" title="BowlTracker" id="e3P-fI-eCq">
+                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="XlX-Ya-dUn">
+                            <connections>
+                                <segue destination="1Qw-yc-INb" kind="show" identifier="ShowInstructions" id="RQd-wT-qEJ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="X7R-ZN-kBU">
                             <connections>
                                 <action selector="promptForGameOption:" destination="a4y-V9-8WZ" id="RJl-VA-yyj"/>
@@ -360,7 +365,64 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFM-GG-j1Q" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1048.8" y="25.637181409295355"/>
+            <point key="canvasLocation" x="823" y="26"/>
+        </scene>
+        <!--Instructions View Controller-->
+        <scene sceneID="piy-hS-qxm">
+            <objects>
+                <viewController storyboardIdentifier="InstructionsViewController" id="1Qw-yc-INb" customClass="InstructionsViewController" customModule="BowlTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dUC-Sx-sOd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lane" translatesAutoresizingMaskIntoConstraints="NO" id="u68-PK-n2C">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-nE-2Z8">
+                                <rect key="frame" x="15" y="15" width="345" height="660"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <mutableString key="text">Welcome to Bowl Tracker.
+
+The following will explain how to use this app to keep score for you. The app is designed for a 3 game series. If you only bowl one game that is fine. If you bowl more than 3 games, you will have to Reset the Series to restart score entry. At this time your scores are not permanently saved. If there is interest, I can certainly add that in a future update.
+
+The key to scoring with this app is to remember you are only selecting pins left on your first ball and then select pins you have picked up on your second ball or tapping the spare "/" will understand you have picked up the remaining pins.
+
+To score:
+
+- Strike : Tap the strike button "X" for your first ball
+- Spare  : Tap the pins you have left on the first ball, then tap the spare button "/"
+- Open   : Tap the pins you have left on the first ball, then tap the pins you picked up on your second ball that did not result in a spare, then tap the "Open" button.
+
+To reset:
+
+- A frame : Select the refresh button in the upper right corner, then select Reset Last Frame from the list. 
+- A game : Select the refresh button in the upper right corner, then select Reset Current Game from the list. 
+- A series : Select the refresh button in the upper right corner, then select Reset Current Series from the list.
+
+Thank you for downloading and using this app and I hope it helps you keep score.
+
+Enjoy !</mutableString>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Dk8-nE-2Z8" firstAttribute="top" secondItem="i6X-5r-Ina" secondAttribute="top" constant="15" id="DC7-Jx-x4T"/>
+                            <constraint firstItem="i6X-5r-Ina" firstAttribute="trailing" secondItem="Dk8-nE-2Z8" secondAttribute="trailing" constant="15" id="Iu8-qK-UiN"/>
+                            <constraint firstItem="i6X-5r-Ina" firstAttribute="bottom" secondItem="Dk8-nE-2Z8" secondAttribute="bottom" constant="15" id="RzP-R2-Ipb"/>
+                            <constraint firstItem="Dk8-nE-2Z8" firstAttribute="leading" secondItem="i6X-5r-Ina" secondAttribute="leading" constant="15" id="baJ-Zz-2hg"/>
+                            <constraint firstItem="u68-PK-n2C" firstAttribute="bottom" secondItem="i6X-5r-Ina" secondAttribute="bottom" id="kJp-sf-hgv"/>
+                            <constraint firstItem="u68-PK-n2C" firstAttribute="trailing" secondItem="i6X-5r-Ina" secondAttribute="trailing" id="q0p-3r-0kR"/>
+                            <constraint firstItem="u68-PK-n2C" firstAttribute="top" secondItem="i6X-5r-Ina" secondAttribute="top" id="uiW-pR-NUD"/>
+                            <constraint firstItem="u68-PK-n2C" firstAttribute="leading" secondItem="i6X-5r-Ina" secondAttribute="leading" id="yZz-hN-yN6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="i6X-5r-Ina"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pGR-Ee-0Dy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1600.8" y="25.862068965517242"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NN9-Ln-FmG">

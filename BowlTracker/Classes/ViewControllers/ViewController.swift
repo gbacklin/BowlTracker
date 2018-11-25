@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     var isTenthFrame = false
     var series: [[Frame]] = [[Frame]]()
     var isGameCompleted = false
+    var textTitle: String?
     
     // MARK: - View Lifecycle
     
@@ -40,6 +41,17 @@ class ViewController: UIViewController {
         newGame()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        title = textTitle
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        textTitle = title
+        title = " "
+    }
+
     // MARK: - @IBAction methods
     
     @IBAction func addPinsLeft(_ sender: UIButton) {
@@ -107,6 +119,16 @@ class ViewController: UIViewController {
         present(actionSheet, animated: true, completion: nil)
     }
     
+    // MARK: - Navigation
+    
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowInstructions" {
+            let controller: InstructionsViewController = segue.destination as! InstructionsViewController
+            controller.textTitle = title
+        }
+    }
+
     // MARK: - Ball thrown methods
     
     func processBallThrown(throwType: Int, isFrameReset: Bool) {
@@ -600,6 +622,7 @@ class ViewController: UIViewController {
         currentFrame = Frame()
         currentFrame.frameNumber = 1
         title = "Game \(series.count + 1) - Frame \(currentFrame.frameNumber)"
+        textTitle = title
         isGameCompleted = false
         resetPins()
     }
