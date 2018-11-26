@@ -343,12 +343,12 @@
                         <viewLayoutGuide key="safeArea" id="lNm-65-HgP"/>
                     </view>
                     <navigationItem key="navigationItem" title="BowlTracker" id="e3P-fI-eCq">
-                        <barButtonItem key="leftBarButtonItem" systemItem="bookmarks" id="XlX-Ya-dUn">
+                        <barButtonItem key="leftBarButtonItem" title="Help" id="XlX-Ya-dUn">
                             <connections>
                                 <segue destination="1Qw-yc-INb" kind="show" identifier="ShowInstructions" id="RQd-wT-qEJ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="X7R-ZN-kBU">
+                        <barButtonItem key="rightBarButtonItem" title="Reset" id="X7R-ZN-kBU">
                             <connections>
                                 <action selector="promptForGameOption:" destination="a4y-V9-8WZ" id="RJl-VA-yyj"/>
                             </connections>
@@ -378,7 +378,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lane" translatesAutoresizingMaskIntoConstraints="NO" id="u68-PK-n2C">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="690"/>
                             </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-nE-2Z8">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-nE-2Z8">
                                 <rect key="frame" x="15" y="15" width="345" height="660"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <mutableString key="text">Welcome to Bowl Tracker.
@@ -395,7 +395,7 @@ To score:
 
 To reset:
 
-- A frame : Select the refresh button in the upper right corner, then select Reset Last Frame from the list. 
+- A frame : Select the Reset button in the upper right corner, then select Reset Last Frame from the list. 
 - A game : Select the refresh button in the upper right corner, then select Reset Current Game from the list. 
 - A series : Select the refresh button in the upper right corner, then select Reset Current Series from the list.
 
@@ -419,6 +419,9 @@ Enjoy !</mutableString>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="i6X-5r-Ina"/>
                     </view>
+                    <connections>
+                        <outlet property="textView" destination="Dk8-nE-2Z8" id="zFd-Ls-exQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pGR-Ee-0Dy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
