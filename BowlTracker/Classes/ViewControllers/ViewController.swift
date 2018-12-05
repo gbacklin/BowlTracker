@@ -37,6 +37,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let appDefaults = [String:AnyObject]()
+        UserDefaults.standard.register(defaults: appDefaults)
+
         initializePinArray(subviews: pinStackView)
         newGame()
     }
@@ -635,17 +638,17 @@ class ViewController: UIViewController {
     }
     
     func endGame() {
+        let weakSelf = self
         let firstGame: Frame = currentGame[0]
         title = "Final score \(firstGame.finalScore)"
         strikeButton.isEnabled = false
         
         displayAllScores()
-        self.series.append(currentGame)
         
-        if self.series.count < 3 {
-            let weakSelf = self
+        if self.series.count < 2 {
             let alert = UIAlertController(title: nil, message: "New Game ?", preferredStyle: .alert)
             let yesAction = UIAlertAction(title: "Yes", style: .default) {(action) in
+                weakSelf.series.append(weakSelf.currentGame)
                 weakSelf.isTenthFrame = false
                 weakSelf.collectionView.reloadData()
                 weakSelf.currentGame.removeAll()
@@ -660,6 +663,7 @@ class ViewController: UIViewController {
             
             self.present(alert, animated: true, completion: nil)
         } else {
+            self.series.append(weakSelf.currentGame)
             let game1 = self.series[0]
             let game2 = self.series[1]
             let game3 = self.series[2]
