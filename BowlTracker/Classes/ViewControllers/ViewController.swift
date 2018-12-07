@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var spareButton: UIButton!
     @IBOutlet weak var strikeButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var helpBarButtonItem: UIBarButtonItem!
     
     var bowlingPins: [UIButton] = [UIButton]()
     var currentFrame: Frame = Frame()
@@ -102,24 +103,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func promptForGameOption(_ sender: Any) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let resetFrameAction = UIAlertAction(title: "Reset Last Frame", style: .default) {[weak self] (action) in
-            self!.resetCurrentFrame()
-        }
-        let resetGameAction = UIAlertAction(title: "Reset Current Game", style: .default) {[weak self] (action) in
-            self!.restartGame()
-        }
-        let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
-            self!.startNewSeries()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-
-        actionSheet.addAction(resetFrameAction)
-        actionSheet.addAction(resetGameAction)
-        actionSheet.addAction(resetSeriesAction)
-        actionSheet.addAction(cancelAction)
-        
-        present(actionSheet, animated: true, completion: nil)
+        promptForGameOption()
     }
     
     // MARK: - Navigation
@@ -129,6 +113,10 @@ class ViewController: UIViewController {
         if segue.identifier == "ShowInstructions" {
             let controller: InstructionsViewController = segue.destination as! InstructionsViewController
             controller.textTitle = title
+        } else if segue.identifier == "ShowSeriesSummary" {
+            let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
+            controller.textTitle = title
+            controller.series = series
         }
     }
 
@@ -313,7 +301,6 @@ class ViewController: UIViewController {
                 twelfthFrame.previousFrame!.nextFrame = twelfthFrame
                 
                 frame.tenthFrame.append(twelfthFrame)
-                //frame.tenthFrame[frame.tenthFrame.count - 1] = eleventhFrame
                 
                 frame.score = twelfthFrame.score
 
@@ -585,6 +572,45 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: - User prompt methods
+    
+    func promptForGameOption() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let resetFrameAction = UIAlertAction(title: "Reset Last Frame", style: .default) {[weak self] (action) in
+            self!.resetCurrentFrame()
+        }
+        let resetGameAction = UIAlertAction(title: "Reset Current Game", style: .default) {[weak self] (action) in
+            self!.restartGame()
+        }
+        let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
+            self!.startNewSeries()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(resetFrameAction)
+        actionSheet.addAction(resetGameAction)
+        actionSheet.addAction(resetSeriesAction)
+        actionSheet.addAction(cancelAction)
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func promptForSummaryDisplay() {
+        let weakSelf = self
+        
+        let alert = UIAlertController(title: nil, message: "Show Series Summary ?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) {(action) in
+            weakSelf.performSegue(withIdentifier: "ShowSeriesSummary", sender: weakSelf)
+        }
+        let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: - Pin Control methods
     
     func initializePinArray(subviews: UIStackView) {
@@ -670,7 +696,9 @@ class ViewController: UIViewController {
             let game1Score = game1[0].finalScore
             let game2Score = game2[0].finalScore
             let game3Score = game3[0].finalScore
-            title = "\(game1Score) \(game2Score) \(game3Score) series (\(game1Score+game2Score+game3Score))"
+            title = "\(game1Score) \(game2Score) \(game3Score) - (\(game1Score+game2Score+game3Score))"
+            
+            promptForSummaryDisplay()
         }
     }
     
@@ -807,8 +835,6 @@ extension ViewController: UICollectionViewDataSource {
                     }
                     cell.ball3ResultLabel.text = ""
                 }
-//                currentFrame.ball1Pins.removeAll()
-//                currentFrame.ball2Pins.removeAll() // GAB
                 break
             case 11:
                 if subFrame!.isStrike {
