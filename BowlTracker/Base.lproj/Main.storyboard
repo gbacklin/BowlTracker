@@ -325,6 +325,13 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AR1-gf-Sdd">
+                                <rect key="frame" x="325" y="644" width="22" height="22"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <segue destination="Spx-8c-mhs" kind="show" identifier="ShowCurrentSeriesSummary" id="11a-GX-XFN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -332,12 +339,14 @@
                             <constraint firstItem="tSD-Wq-tLa" firstAttribute="bottom" secondItem="lNm-65-HgP" secondAttribute="bottom" id="9Jd-3g-sGk"/>
                             <constraint firstItem="lNm-65-HgP" firstAttribute="bottom" secondItem="mbO-lF-sg0" secondAttribute="bottom" constant="20" id="9Pc-fX-Yq4"/>
                             <constraint firstItem="lNm-65-HgP" firstAttribute="trailing" secondItem="Oto-Tt-cbl" secondAttribute="trailing" constant="16" id="9cB-Xe-E12"/>
+                            <constraint firstItem="lNm-65-HgP" firstAttribute="bottom" secondItem="AR1-gf-Sdd" secondAttribute="bottom" constant="24" id="Bx7-Iu-k1w"/>
                             <constraint firstItem="mbO-lF-sg0" firstAttribute="centerX" secondItem="QL1-Kd-UDD" secondAttribute="centerX" id="HZo-wL-g6V"/>
                             <constraint firstItem="Oto-Tt-cbl" firstAttribute="top" secondItem="lNm-65-HgP" secondAttribute="top" constant="8" id="IRo-bi-DTZ"/>
                             <constraint firstItem="tSD-Wq-tLa" firstAttribute="top" secondItem="lNm-65-HgP" secondAttribute="top" id="O5U-B5-6Vj"/>
                             <constraint firstItem="KjB-Ch-Xou" firstAttribute="centerX" secondItem="QL1-Kd-UDD" secondAttribute="centerX" id="VRX-AX-acW"/>
                             <constraint firstItem="KjB-Ch-Xou" firstAttribute="centerY" secondItem="QL1-Kd-UDD" secondAttribute="centerY" id="hRQ-zc-GSh"/>
                             <constraint firstItem="Oto-Tt-cbl" firstAttribute="leading" secondItem="lNm-65-HgP" secondAttribute="leading" constant="16" id="mVk-2I-OAa"/>
+                            <constraint firstItem="lNm-65-HgP" firstAttribute="trailing" secondItem="AR1-gf-Sdd" secondAttribute="trailing" constant="28" id="obe-ys-lqk"/>
                             <constraint firstItem="tSD-Wq-tLa" firstAttribute="leading" secondItem="lNm-65-HgP" secondAttribute="leading" id="u1o-kq-g89"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lNm-65-HgP"/>
@@ -625,4 +634,7 @@ Enjoy !</string>
         <image name="spare" width="361.41177368164062" height="361.41177368164062"/>
         <image name="strike" width="361.41177368164062" height="361.41177368164062"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="11a-GX-XFN"/>
+    </inferredMetricsTieBreakers>
 </document>

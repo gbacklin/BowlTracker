@@ -117,6 +117,10 @@ class ViewController: UIViewController {
             let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
             controller.textTitle = title
             controller.series = series
+        } else if segue.identifier == "ShowCurrentSeriesSummary" {
+            let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
+            controller.textTitle = title
+            controller.series = series
         }
     }
 
