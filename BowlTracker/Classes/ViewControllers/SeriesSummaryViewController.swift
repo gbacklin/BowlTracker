@@ -32,7 +32,11 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return series!.count
+        var count = series!.count
+        if count > 3 {
+            count = 3
+        }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

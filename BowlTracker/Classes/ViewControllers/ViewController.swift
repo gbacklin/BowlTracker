@@ -678,7 +678,7 @@ class ViewController: UIViewController {
         if self.series.count < 2 {
             let alert = UIAlertController(title: nil, message: "New Game ?", preferredStyle: .alert)
             let yesAction = UIAlertAction(title: "Yes", style: .default) {(action) in
-                weakSelf.series.append(weakSelf.currentGame)
+                weakSelf.updateSeriesWith(game: weakSelf.currentGame)
                 weakSelf.isTenthFrame = false
                 weakSelf.collectionView.reloadData()
                 weakSelf.currentGame.removeAll()
@@ -693,7 +693,7 @@ class ViewController: UIViewController {
             
             self.present(alert, animated: true, completion: nil)
         } else {
-            self.series.append(weakSelf.currentGame)
+            self.updateSeriesWith(game: self.currentGame)
             let game1 = self.series[0]
             let game2 = self.series[1]
             let game3 = self.series[2]
@@ -704,6 +704,12 @@ class ViewController: UIViewController {
             
             promptForSummaryDisplay()
         }
+    }
+    
+    // MARK: - Series methods
+    
+    func updateSeriesWith(game: [Frame]) {
+        series.append(game)
     }
     
     // MARK: - Resetting methods
