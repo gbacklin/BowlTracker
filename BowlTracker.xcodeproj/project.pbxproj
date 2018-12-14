@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E2B24E021C29627006A3A37 /* PDFConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2B24DF21C29627006A3A37 /* PDFConverter.swift */; };
 		4E2D63E321B9AB05001A712E /* SeriesSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2D63E221B9AB05001A712E /* SeriesSummaryViewController.swift */; };
 		4E2D63E521B9BD9E001A712E /* CustomCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2D63E421B9BD9E001A712E /* CustomCollectionReusableView.swift */; };
 		4E7D154621AB00B1000AA624 /* InstructionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7D154521AB00B1000AA624 /* InstructionsViewController.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4E2B24DF21C29627006A3A37 /* PDFConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFConverter.swift; sourceTree = "<group>"; };
 		4E2D63E221B9AB05001A712E /* SeriesSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesSummaryViewController.swift; sourceTree = "<group>"; };
 		4E2D63E421B9BD9E001A712E /* CustomCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionReusableView.swift; sourceTree = "<group>"; };
 		4E7D154521AB00B1000AA624 /* InstructionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 		4E89FF1C21B883CD00F40696 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4E2B24DF21C29627006A3A37 /* PDFConverter.swift */,
 				4E89FF1D21B883E400F40696 /* SettingsBundleHelper.swift */,
 			);
 			path = Utility;
@@ -235,6 +238,7 @@
 			files = (
 				4EC31278218350C20033EBA0 /* ViewController.swift in Sources */,
 				4E2D63E321B9AB05001A712E /* SeriesSummaryViewController.swift in Sources */,
+				4E2B24E021C29627006A3A37 /* PDFConverter.swift in Sources */,
 				4E2D63E521B9BD9E001A712E /* CustomCollectionReusableView.swift in Sources */,
 				4EC31276218350C20033EBA0 /* Frame.swift in Sources */,
 				4EC31277218350C20033EBA0 /* FrameCollectionViewCell.swift in Sources */,
