@@ -785,6 +785,22 @@ class ViewController: UIViewController {
 
     }
     
+    // MARK: - Utility methods
+    
+    func isSplit(pins: [Int]) -> Bool {
+        let splits = ["7-10", "7-9", "8-10", "5-7", "5-10", "6-7", "5-7-10", "3-7", "2-10", "2-7", "3-10", "2-7-10", "3-7-10", "4-7-10", "6-7-10", "4-6-7-10", "4-5", "5-6", "7-8", "9-10", "4-6-7-8-10", "4-6-7-9-10", "3-4-6-7-10", "2-4-6-7-10", "2-4-6-7-8-10", "3-4-6-7-9-10", "4-10", "2-3", "4-6", "8-9"]
+        var split = ""
+        for pin in pins.sorted() {
+            split += "\(pin)-"
+        }
+        
+        if split.last == "-" {
+            split = String(split.dropLast())
+        }
+        
+        return splits.contains(split)
+    }
+
 }
 
 extension ViewController: UICollectionViewDataSource {
@@ -812,6 +828,11 @@ extension ViewController: UICollectionViewDataSource {
             } else if frame.isSpare {
                 cell.ball1ResultLabel.text = ""
                 cell.ball2ResultLabel.text = "\(10 - frame.ball1Pins.count)"
+                if isSplit(pins: frame.ball1Pins) {
+                    cell.ball2ResultLabel.textColor = UIColor.red
+                } else {
+                    cell.ball2ResultLabel.textColor = UIColor.black
+                }
                 cell.ball3ResultLabel.text = "/"
             } else {
                 cell.ball1ResultLabel.text = ""
@@ -820,6 +841,11 @@ extension ViewController: UICollectionViewDataSource {
                     cell.ball3ResultLabel.text = "-"
                 } else {
                     cell.ball3ResultLabel.text = "\(10 - (10 - (frame.ball1Pins.count - frame.ball2Pins.count)))"
+                }
+                if isSplit(pins: frame.ball1Pins) {
+                    cell.ball2ResultLabel.textColor = UIColor.red
+                } else {
+                    cell.ball2ResultLabel.textColor = UIColor.black
                 }
             }
         } else {
@@ -836,6 +862,11 @@ extension ViewController: UICollectionViewDataSource {
                     cell.ball1ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                     cell.ball2ResultLabel.text = "/"
                     cell.ball3ResultLabel.text = ""
+                    if isSplit(pins: frame.ball1Pins) {
+                        cell.ball1ResultLabel.textColor = UIColor.red
+                    } else {
+                        cell.ball1ResultLabel.textColor = UIColor.black
+                    }
                 } else {
                     cell.ball1ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                     if (10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count))) == 0 {
@@ -854,6 +885,11 @@ extension ViewController: UICollectionViewDataSource {
                 } else if subFrame!.isSpare {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
+                    if isSplit(pins: frame.ball1Pins) {
+                        cell.ball2ResultLabel.textColor = UIColor.red
+                    } else {
+                        cell.ball2ResultLabel.textColor = UIColor.black
+                    }
                     cell.ball3ResultLabel.text = "/"
                 } else {
                     let previousFrame = subFrame!.previousFrame
@@ -885,6 +921,11 @@ extension ViewController: UICollectionViewDataSource {
                 } else if subFrame!.isSpare {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
+                    if isSplit(pins: frame.ball1Pins) {
+                        cell.ball2ResultLabel.textColor = UIColor.red
+                    } else {
+                        cell.ball2ResultLabel.textColor = UIColor.black
+                    }
                     cell.ball3ResultLabel.text = "/"
                 } else {
                     cell.ball1ResultLabel.text = "X"
