@@ -13,7 +13,7 @@ class SettingsBundleHelper: NSObject {
     class func setVersionAndBuildDate() {
         let versionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let buildString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
-        let version = "Version: \(versionString) (\(buildString))"
+        let version = "\(versionString) (\(buildString))"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
         
