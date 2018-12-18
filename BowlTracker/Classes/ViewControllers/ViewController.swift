@@ -884,7 +884,7 @@ extension ViewController: UICollectionViewDataSource {
                         } else {
                             cell.ball1ResultLabel.textColor = UIColor.black
                         }
-                 }
+                    }
                     cell.ball3ResultLabel.text = ""
                 }
                 break
@@ -917,14 +917,14 @@ extension ViewController: UICollectionViewDataSource {
                             } else {
                                 cell.ball2ResultLabel.textColor = UIColor.black
                             }
-                      } else {
+                        } else {
                             cell.ball3ResultLabel.text = "\(10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count)))"
                             if isSplit(pins: subFrame!.ball1Pins) {
                                 cell.ball2ResultLabel.textColor = UIColor.red
                             } else {
                                 cell.ball2ResultLabel.textColor = UIColor.black
                             }
-                       }
+                        }
                     }
                 }
                 break
@@ -939,9 +939,9 @@ extension ViewController: UICollectionViewDataSource {
                         cell.ball2ResultLabel.text = "/"
                         cell.ball3ResultLabel.text = "X"
                         if isSplit(pins: subFrame!.previousFrame!.ball1Pins) {
-                            cell.ball2ResultLabel.textColor = UIColor.red
+                            cell.ball1ResultLabel.textColor = UIColor.red
                         } else {
-                            cell.ball2ResultLabel.textColor = UIColor.black
+                            cell.ball1ResultLabel.textColor = UIColor.black
                         }
                     }
                 } else if subFrame!.isSpare {

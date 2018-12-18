@@ -217,7 +217,7 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                 } else {
                     cell.ball2ResultLabel.textColor = UIColor.black
                 }
-           }
+            }
         } else {
             let tenthFrame = currentGame[9]
             let subFrame = tenthFrame.tenthFrame.last
@@ -247,14 +247,14 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                         } else {
                             cell.ball1ResultLabel.textColor = UIColor.black
                         }
-                   } else {
+                    } else {
                         cell.ball2ResultLabel.text = "\(10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count)))"
                         if isSplit(pins: subFrame!.ball1Pins) {
                             cell.ball1ResultLabel.textColor = UIColor.red
                         } else {
                             cell.ball1ResultLabel.textColor = UIColor.black
                         }
-                   }
+                    }
                     cell.ball3ResultLabel.text = ""
                 }
                 break
@@ -313,7 +313,7 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                         } else {
                             cell.ball1ResultLabel.textColor = UIColor.black
                         }
-                   }
+                    }
                 } else if subFrame!.isSpare {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
