@@ -893,7 +893,8 @@ extension ViewController: UICollectionViewDataSource {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "X"
                     cell.ball3ResultLabel.text = ""
-                } else if subFrame!.isSpare {
+                    cell.ball2ResultLabel.textColor = UIColor.black
+               } else if subFrame!.isSpare {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                     if isSplit(pins: subFrame!.ball1Pins) {
@@ -934,6 +935,7 @@ extension ViewController: UICollectionViewDataSource {
                         cell.ball1ResultLabel.text = "X"
                         cell.ball2ResultLabel.text = "X"
                         cell.ball3ResultLabel.text = "X"
+                        cell.ball2ResultLabel.textColor = UIColor.black
                     } else {
                         cell.ball1ResultLabel.text = "\(10 - subFrame!.previousFrame!.ball1Pins.count)"
                         cell.ball2ResultLabel.text = "/"
