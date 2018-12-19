@@ -594,8 +594,8 @@ class ViewController: UIViewController {
             self!.restartGame()
         }
         let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
-            self!.shouldShowSeriesButton()
             self!.startNewSeries()
+            self!.shouldShowSeriesButton()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
