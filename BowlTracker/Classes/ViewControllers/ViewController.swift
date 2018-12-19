@@ -50,17 +50,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = textTitle
-        
-        if let history = PropertyList.dictionaryFromPropertyList(filename: "SeriesHistory") {
-            seriesHistory = history
-            showSeriesButton.isHidden = false
-        } else {
-            if series.count > 0 {
-                showSeriesButton.isHidden = false
-            } else {
-                showSeriesButton.isHidden = true
-            }
-        }
+        shouldShowSeriesButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -604,6 +594,7 @@ class ViewController: UIViewController {
             self!.restartGame()
         }
         let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
+            self!.shouldShowSeriesButton()
             self!.startNewSeries()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -829,6 +820,19 @@ class ViewController: UIViewController {
         return splits.contains(split)
     }
 
+    func shouldShowSeriesButton() {
+        if let history = PropertyList.dictionaryFromPropertyList(filename: "SeriesHistory") {
+            seriesHistory = history
+            showSeriesButton.isHidden = false
+        } else {
+            if series.count > 0 {
+                showSeriesButton.isHidden = false
+            } else {
+                showSeriesButton.isHidden = true
+            }
+        }
+    }
+    
 }
 
 extension ViewController: UICollectionViewDataSource {
