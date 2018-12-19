@@ -329,7 +329,7 @@
                                 <rect key="frame" x="325" y="644" width="22" height="22"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <segue destination="Spx-8c-mhs" kind="show" identifier="ShowCurrentSeriesSummary" id="11a-GX-XFN"/>
+                                    <action selector="promptForSummaryDisplay:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="Rfw-fv-gLt"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -369,9 +369,11 @@
                         <outlet property="collectionView" destination="Oto-Tt-cbl" id="fKs-uT-Ktp"/>
                         <outlet property="helpBarButtonItem" destination="XlX-Ya-dUn" id="ohR-Ej-bnV"/>
                         <outlet property="pinStackView" destination="KjB-Ch-Xou" id="Jqh-l6-nre"/>
+                        <outlet property="showSeriesButton" destination="AR1-gf-Sdd" id="WJn-zy-1NQ"/>
                         <outlet property="spareButton" destination="4Kl-le-2CV" id="Sd6-us-Hts"/>
                         <outlet property="strikeButton" destination="POb-KJ-fbX" id="bia-c8-gEA"/>
-                        <segue destination="Spx-8c-mhs" kind="show" identifier="ShowSeriesSummary" id="s4f-GU-d79"/>
+                        <segue destination="Spx-8c-mhs" kind="show" identifier="ShowSeriesSummary" id="Vbz-re-pAl"/>
+                        <segue destination="2J9-EV-OfT" kind="show" identifier="ShowSeriesHistory" id="0j4-E6-db2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFM-GG-j1Q" sceneMemberID="firstResponder"/>
@@ -392,7 +394,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-nE-2Z8">
                                 <rect key="frame" x="15" y="15" width="345" height="660"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Welcome to Bowl Tracker.
+                                <string key="text">Welcome to Bowl Tracker.
 
 The following will explain how to use this app to keep score for you. The app is designed for a 3 game series. If you only bowl one game that is fine. If you bowl more than 3 games, you will have to Reset the Series to restart score entry. At this time your scores are not permanently saved. If there is interest, I can certainly add that in a future update.
 
@@ -416,7 +418,7 @@ At the end of completing your 3 game series, you will be prompted if you want to
 
 Thank you for downloading and using this app and I hope it helps you keep score.
 
-Enjoy !</mutableString>
+Enjoy !</string>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -441,6 +443,54 @@ Enjoy !</mutableString>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pGR-Ee-0Dy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1590" y="-315"/>
+        </scene>
+        <!--Show Series History Table View Controller-->
+        <scene sceneID="bND-pC-8Kg">
+            <objects>
+                <tableViewController storyboardIdentifier="ShowSeriesHistoryTableViewController" id="2J9-EV-OfT" customClass="ShowSeriesHistoryTableViewController" customModule="BowlTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CEL-pw-HRU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="0SP-a6-D1Y" detailTextLabel="90b-hx-GJx" style="IBUITableViewCellStyleSubtitle" id="f7e-IV-lSx">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="f7e-IV-lSx" id="uqF-nM-wai">
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.666666666666664"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0SP-a6-D1Y">
+                                            <rect key="frame" x="16.000000000000004" y="5" width="33.333333333333336" height="20.333333333333332"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="90b-hx-GJx">
+                                            <rect key="frame" x="15.999999999999996" y="25.333333333333332" width="43.666666666666664" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <segue destination="Spx-8c-mhs" kind="show" identifier="ShowSeriesHistorySummary" id="gmx-se-xuj"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="2J9-EV-OfT" id="nPd-Na-zTW"/>
+                            <outlet property="delegate" destination="2J9-EV-OfT" id="AX9-2B-ZYS"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EOC-Fd-BgE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1590" y="420"/>
         </scene>
         <!--Series Summary View Controller-->
         <scene sceneID="DgN-YX-PQ4">
@@ -605,7 +655,7 @@ Enjoy !</mutableString>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZsZ-wg-0NR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1589.5999999999999" y="366.50246305418722"/>
+            <point key="canvasLocation" x="2370" y="26"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="NN9-Ln-FmG">
@@ -639,6 +689,6 @@ Enjoy !</mutableString>
         <image name="strike" width="361.41177368164062" height="361.41177368164062"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="s4f-GU-d79"/>
+        <segue reference="gmx-se-xuj"/>
     </inferredMetricsTieBreakers>
 </document>

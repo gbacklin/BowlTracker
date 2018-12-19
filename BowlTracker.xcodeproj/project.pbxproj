@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E1FB31B21C9961F00EFCE37 /* PropertyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB31A21C9961F00EFCE37 /* PropertyList.swift */; };
+		4E1FB31D21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB31C21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift */; };
 		4E2B24E021C29627006A3A37 /* PDFConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2B24DF21C29627006A3A37 /* PDFConverter.swift */; };
 		4E2D63E321B9AB05001A712E /* SeriesSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2D63E221B9AB05001A712E /* SeriesSummaryViewController.swift */; };
 		4E2D63E521B9BD9E001A712E /* CustomCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2D63E421B9BD9E001A712E /* CustomCollectionReusableView.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4E1FB31A21C9961F00EFCE37 /* PropertyList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyList.swift; sourceTree = "<group>"; };
+		4E1FB31C21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSeriesHistoryTableViewController.swift; sourceTree = "<group>"; };
 		4E2B24DF21C29627006A3A37 /* PDFConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PDFConverter.swift; sourceTree = "<group>"; };
 		4E2D63E221B9AB05001A712E /* SeriesSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesSummaryViewController.swift; sourceTree = "<group>"; };
 		4E2D63E421B9BD9E001A712E /* CustomCollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				4E2B24DF21C29627006A3A37 /* PDFConverter.swift */,
+				4E1FB31A21C9961F00EFCE37 /* PropertyList.swift */,
 				4E89FF1D21B883E400F40696 /* SettingsBundleHelper.swift */,
 			);
 			path = Utility;
@@ -136,6 +141,7 @@
 			children = (
 				4E7D154521AB00B1000AA624 /* InstructionsViewController.swift */,
 				4E2D63E221B9AB05001A712E /* SeriesSummaryViewController.swift */,
+				4E1FB31C21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift */,
 				4EC31275218350C10033EBA0 /* ViewController.swift */,
 			);
 			path = ViewControllers;
@@ -242,8 +248,10 @@
 				4E2D63E521B9BD9E001A712E /* CustomCollectionReusableView.swift in Sources */,
 				4EC31276218350C20033EBA0 /* Frame.swift in Sources */,
 				4EC31277218350C20033EBA0 /* FrameCollectionViewCell.swift in Sources */,
+				4E1FB31D21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift in Sources */,
 				4E89FF1E21B883E400F40696 /* SettingsBundleHelper.swift in Sources */,
 				4E921B3F2183504200602A2C /* AppDelegate.swift in Sources */,
+				4E1FB31B21C9961F00EFCE37 /* PropertyList.swift in Sources */,
 				4E7D154621AB00B1000AA624 /* InstructionsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

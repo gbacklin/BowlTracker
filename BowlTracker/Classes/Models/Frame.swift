@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Frame: NSObject, NSCopying, Codable {
+class Frame: NSObject, NSCopying, NSCoding {
     var frameNumber = 0
     var finalScore = 0
     var score = 0
@@ -46,5 +46,34 @@ class Frame: NSObject, NSCopying, Codable {
         return copy
     }
     
-
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(frameNumber, forKey: "frameNumber")
+        aCoder.encode(finalScore, forKey: "finalScore")
+        aCoder.encode(ball1Pins, forKey: "ball1Pins")
+        aCoder.encode(ball2Pins, forKey: "ball2Pins")
+        aCoder.encode(score, forKey: "score")
+        aCoder.encode(isSpare, forKey: "isSpare")
+        aCoder.encode(isStrike, forKey: "isStrike")
+        aCoder.encode(isCompleted, forKey: "isCompleted")
+        aCoder.encode(displayScore, forKey: "displayScore")
+        aCoder.encode(previousFrame, forKey: "previousFrame")
+        aCoder.encode(nextFrame, forKey: "nextFrame")
+        aCoder.encode(tenthFrame, forKey: "tenthFrame")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        frameNumber = Int(aDecoder.decodeInt32(forKey: "frameNumber"))
+        finalScore = Int(aDecoder.decodeInt32(forKey: "finalScore"))
+        ball1Pins = aDecoder.decodeObject(forKey: "ball1Pins") as! [Int]
+        ball2Pins = aDecoder.decodeObject(forKey: "ball2Pins") as! [Int]
+        score = Int(aDecoder.decodeInt32(forKey: "score"))
+        isSpare = aDecoder.decodeBool(forKey: "isSpare")
+        isStrike = aDecoder.decodeBool(forKey: "isStrike")
+        isCompleted = aDecoder.decodeBool(forKey: "isCompleted")
+        displayScore = aDecoder.decodeBool(forKey: "displayScore")
+        previousFrame = aDecoder.decodeObject(forKey: "previousFrame") as? Frame
+        nextFrame = aDecoder.decodeObject(forKey: "nextFrame") as? Frame
+        tenthFrame = aDecoder.decodeObject(forKey: "tenthFrame") as! [Frame]
+    }
+    
 }

@@ -18,6 +18,7 @@ class SeriesSummaryViewController: UIViewController {
     
     var textTitle: String?
     var series: [[Frame]]?
+    var isHistory: Bool?
 
     // MARK: - View lifecycle
     
@@ -57,7 +58,6 @@ class SeriesSummaryViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let sendAsEmailAction = UIAlertAction(title: "Send as Email", style: .default) {[weak self] (action) in
             self!.sendImageInMail(image: self!.view.screenShot())
-            
         }
         let sendAsSMSAction = UIAlertAction(title: "Send as SMS", style: .default) {[weak self] (action) in
             self!.sendImageInSMS(image: self!.view.screenShot())
@@ -68,6 +68,13 @@ class SeriesSummaryViewController: UIViewController {
         actionSheet.addAction(sendAsSMSAction)
         actionSheet.addAction(cancelAction)
         
+        if isHistory == false {
+            let saveSeriesAction = UIAlertAction(title: "Save Series", style: .default) {[weak self] (action) in
+                self!.saveSeries(filename: "SeriesHistory")
+            }
+            actionSheet.addAction(saveSeriesAction)
+        }
+
         present(actionSheet, animated: true, completion: nil)
     }
     
@@ -75,7 +82,14 @@ class SeriesSummaryViewController: UIViewController {
     
     func dateToString(now: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+        
+        return dateFormatter.string(from: now)
+    }
+
+    func dateToKey(now: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyyddMM-hh:mm a"
         
         return dateFormatter.string(from: now)
     }
@@ -117,6 +131,30 @@ class SeriesSummaryViewController: UIViewController {
         } else {
             displayAction(message: "Cannot send SMS.")
         }
+    }
+    
+    func saveSeries(filename: String) {
+        var dict = [String : [[Frame]]]()
+        let key = dateToKey(now: Date())
+        var message: String?
+        
+        if let history = PropertyList.dictionaryFromPropertyList(filename: "SeriesHistory") {
+            dict = history as! [String : [[Frame]]]
+        }
+        dict[key] = series!
+        
+        let result = PropertyList.writePropertyListFromDictionary(filename: filename as NSString, plistDict: dict as NSDictionary)
+        if result {
+            message = "Series was saved"
+        } else {
+            message = "Series was not saved"
+        }
+        let alertController: UIAlertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+
     }
 
     // MARK: - Utility methods

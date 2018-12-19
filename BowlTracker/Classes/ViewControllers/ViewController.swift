@@ -23,6 +23,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var strikeButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var helpBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var showSeriesButton: UIButton!
     
     var bowlingPins: [UIButton] = [UIButton]()
     var currentFrame: Frame = Frame()
@@ -32,7 +33,8 @@ class ViewController: UIViewController {
     var series: [[Frame]] = [[Frame]]()
     var isGameCompleted = false
     var textTitle: String?
-    
+    var seriesHistory: NSDictionary?
+
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -48,6 +50,17 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         title = textTitle
+        
+        if let history = PropertyList.dictionaryFromPropertyList(filename: "SeriesHistory") {
+            seriesHistory = history
+            showSeriesButton.isHidden = false
+        } else {
+            if series.count > 0 {
+                showSeriesButton.isHidden = false
+            } else {
+                showSeriesButton.isHidden = true
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,6 +119,9 @@ class ViewController: UIViewController {
         promptForGameOption()
     }
     
+    @IBAction func promptForSummaryDisplay(_ sender: Any) {
+        promptForSummaryDisplay(showHistory: true)
+    }
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -117,10 +133,11 @@ class ViewController: UIViewController {
             let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
             controller.textTitle = title
             controller.series = series
-        } else if segue.identifier == "ShowCurrentSeriesSummary" {
-            let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
-            controller.textTitle = title
-            controller.series = series
+            controller.isHistory = false
+        } else if segue.identifier == "ShowSeriesHistory" {
+            let controller: ShowSeriesHistoryTableViewController = segue.destination as! ShowSeriesHistoryTableViewController
+            controller.textTitle = "History"
+            controller.seriesHistory = seriesHistory
         }
     }
 
@@ -599,20 +616,31 @@ class ViewController: UIViewController {
         present(actionSheet, animated: true, completion: nil)
     }
     
-    func promptForSummaryDisplay() {
-        let weakSelf = self
+    func promptForSummaryDisplay(showHistory: Bool) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let alert = UIAlertController(title: nil, message: "Show Series Summary ?", preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Yes", style: .default) {(action) in
-            weakSelf.performSegue(withIdentifier: "ShowSeriesSummary", sender: weakSelf)
+        if series.count > 0 {
+            let showSeriesSummary = UIAlertAction(title: "Show Series Summary", style: .default) {[weak self] (action) in
+                self!.performSegue(withIdentifier: "ShowSeriesSummary", sender: self!)
+            }
+            actionSheet.addAction(showSeriesSummary)
         }
-        let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(cancelAction)
+        
+        if showHistory {
+            if let history = seriesHistory {
+                if history.count > 0 {
+                    let showSeriesHistory = UIAlertAction(title: "Show Series History", style: .default) {[weak self] (action) in
+                        self!.performSegue(withIdentifier: "ShowSeriesHistory", sender: self!)
+                    }
+                    actionSheet.addAction(showSeriesHistory)
+                }
+            }
         }
-        
-        alert.addAction(yesAction)
-        alert.addAction(noAction)
-        
-        self.present(alert, animated: true, completion: nil)
+
+        present(actionSheet, animated: true, completion: nil)
     }
     
     // MARK: - Pin Control methods
@@ -702,7 +730,7 @@ class ViewController: UIViewController {
             let game3Score = game3[0].finalScore
             title = "\(game1Score) \(game2Score) \(game3Score) - (\(game1Score+game2Score+game3Score))"
             
-            promptForSummaryDisplay()
+            promptForSummaryDisplay(showHistory: false)
         }
     }
     
