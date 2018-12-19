@@ -595,7 +595,6 @@ class ViewController: UIViewController {
         }
         let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
             self!.startNewSeries()
-            self!.shouldShowSeriesButton()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -791,7 +790,8 @@ class ViewController: UIViewController {
             self!.isTenthFrame = false
             self!.series.removeAll()
             self!.isGameCompleted = false
-            
+            self!.shouldShowSeriesButton()
+
             self!.newGame()
             self!.updateScoreDisplay()
         }
