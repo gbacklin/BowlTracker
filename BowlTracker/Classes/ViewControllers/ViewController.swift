@@ -346,7 +346,7 @@ class ViewController: UIViewController {
             case 10:
                 if frame.previousFrame!.isStrike {
                     frame.previousFrame!.score += frame.ball1Pins.count - frame.ball2Pins.count
-                    frame.score += (frame.ball1Pins.count - frame.ball2Pins.count) * 2
+                    frame.score += (frame.ball1Pins.count - frame.ball2Pins.count)
                 } else {
                     frame.score += frame.ball1Pins.count - frame.ball2Pins.count
                 }
@@ -587,20 +587,23 @@ class ViewController: UIViewController {
     
     func promptForGameOption() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let resetFrameAction = UIAlertAction(title: "Reset Last Frame", style: .default) {[weak self] (action) in
-            self!.resetCurrentFrame()
-        }
-        let resetGameAction = UIAlertAction(title: "Reset Current Game", style: .default) {[weak self] (action) in
-            self!.restartGame()
-        }
-        let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
-            self!.startNewSeries()
+        if series.count < 3 {
+            let resetFrameAction = UIAlertAction(title: "Reset Last Frame", style: .default) {[weak self] (action) in
+                self!.resetCurrentFrame()
+            }
+            let resetGameAction = UIAlertAction(title: "Reset Current Game", style: .default) {[weak self] (action) in
+                self!.restartGame()
+            }
+            actionSheet.addAction(resetFrameAction)
+            actionSheet.addAction(resetGameAction)
+        } else {
+            let resetSeriesAction = UIAlertAction(title: "Reset Current Series", style: .default) {[weak self] (action) in
+                self!.startNewSeries()
+            }
+            actionSheet.addAction(resetSeriesAction)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        actionSheet.addAction(resetFrameAction)
-        actionSheet.addAction(resetGameAction)
-        actionSheet.addAction(resetSeriesAction)
         actionSheet.addAction(cancelAction)
         
         present(actionSheet, animated: true, completion: nil)
@@ -795,7 +798,9 @@ class ViewController: UIViewController {
             self!.newGame()
             self!.updateScoreDisplay()
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {[weak self] (action) in
+            self!.shouldShowSeriesButton()
+        }
         
         alert.addAction(yesAction)
         alert.addAction(cancelAction)
@@ -807,7 +812,8 @@ class ViewController: UIViewController {
     // MARK: - Utility methods
     
     func isSplit(pins: [Int]) -> Bool {
-        let splits = ["7-10", "7-9", "8-10", "5-7", "5-10", "6-7", "5-7-10", "3-7", "2-10", "2-7", "3-10", "2-7-10", "3-7-10", "4-7-10", "6-7-10", "4-6-7-10", "4-5", "5-6", "7-8", "9-10", "4-6-7-8-10", "4-6-7-9-10", "3-4-6-7-10", "2-4-6-7-10", "2-4-6-7-8-10", "3-4-6-7-9-10", "4-10", "2-3", "4-6", "8-9", "6-7", "6-8", "4-9", "2-6", "3-4"]
+        let splits = ["7-10", "7-9", "8-10", "5-7", "5-10", "6-7", "5-7-10", "3-7", "2-10", "2-7", "3-10", "2-7-10", "3-7-10", "4-7-10", "6-7-10", "4-6-7-10", "4-5", "5-6", "7-8", "9-10", "4-6-7-8-10", "4-6-7-9-10", "3-4-6-7-10", "2-4-6-7-10", "2-4-6-7-8-10", "3-4-6-7-9-10", "4-10", "2-3", "4-6", "8-9", "6-7", "6-8", "4-9", "2-6", "3-4", "4-7-9"]
+
         var split = ""
         for pin in pins.sorted() {
             split += "\(pin)-"
@@ -937,7 +943,16 @@ extension ViewController: UICollectionViewDataSource {
                     cell.ball3ResultLabel.text = "/"
                 } else {
                     let previousFrame = subFrame!.previousFrame
-                    if previousFrame!.isSpare {
+                    if previousFrame!.isStrike {
+                        cell.ball1ResultLabel.text = "X"
+                        cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
+                        if ((subFrame!.ball1Pins.count) - (subFrame!.ball2Pins.count)) == 0 {
+                            cell.ball3ResultLabel.text = "-"
+                        } else {
+                            cell.ball3ResultLabel.text = "\(10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count)))"
+                        }
+                        cell.ball2ResultLabel.textColor = UIColor.black
+                    } else if previousFrame!.isSpare {
                         cell.ball1ResultLabel.text = "\(10 - previousFrame!.ball1Pins.count)"
                         cell.ball2ResultLabel.text = "/"
                         cell.ball3ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
