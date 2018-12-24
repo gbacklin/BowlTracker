@@ -233,7 +233,8 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                 cell.ball1ResultLabel.text = ""
                 cell.ball2ResultLabel.text = ""
                 cell.ball3ResultLabel.text = "X"
-            } else if frame.isSpare {
+                cell.ball3ResultLabel.textColor = UIColor.black
+           } else if frame.isSpare {
                 cell.ball1ResultLabel.text = ""
                 cell.ball2ResultLabel.text = "\(10 - frame.ball1Pins.count)"
                 if isSplit(pins: frame.ball1Pins) {
@@ -329,6 +330,17 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                         cell.ball1ResultLabel.text = "\(10 - previousFrame!.ball1Pins.count)"
                         cell.ball2ResultLabel.text = "/"
                         cell.ball3ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
+                        cell.ball2ResultLabel.textColor = UIColor.black
+                        if isSplit(pins: previousFrame!.ball1Pins) {
+                            cell.ball1ResultLabel.textColor = UIColor.red
+                        } else {
+                            cell.ball1ResultLabel.textColor = UIColor.black
+                        }
+                        if isSplit(pins: subFrame!.ball1Pins) {
+                            cell.ball3ResultLabel.textColor = UIColor.red
+                        } else {
+                            cell.ball3ResultLabel.textColor = UIColor.black
+                        }
                     } else {
                         cell.ball2ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
                         if (10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count))) == 0 {
@@ -376,10 +388,12 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                         cell.ball2ResultLabel.textColor = UIColor.black
                     }
                     cell.ball3ResultLabel.text = "/"
+                    cell.ball3ResultLabel.textColor = UIColor.black
                 } else {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "X"
                     cell.ball3ResultLabel.text = "\(10 - subFrame!.ball1Pins.count)"
+                    cell.ball2ResultLabel.textColor = UIColor.black
                     if isSplit(pins: subFrame!.ball1Pins) {
                         cell.ball3ResultLabel.textColor = UIColor.red
                     } else {

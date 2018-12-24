@@ -394,7 +394,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-nE-2Z8">
                                 <rect key="frame" x="15" y="15" width="345" height="660"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <mutableString key="text">Welcome to Bowl Tracker.
+                                <string key="text">Welcome to Bowl Tracker.
 
 The following will explain how to use this app to keep score for you. The app is designed for a 3 game series. If you only bowl one game that is fine. If you bowl more than 3 games, you will have to Reset the Series to restart score entry. At this time your scores are not permanently saved. If there is interest, I can certainly add that in a future update.
 
@@ -418,7 +418,7 @@ At the end of completing your 3 game series, you will be prompted if you want to
 
 Thank you for downloading and using this app and I hope it helps you keep score.
 
-Enjoy !</mutableString>
+Enjoy !</string>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -689,6 +689,6 @@ Enjoy !</mutableString>
         <image name="strike" width="361.41177368164062" height="361.41177368164062"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gmx-se-xuj"/>
+        <segue reference="Vbz-re-pAl"/>
     </inferredMetricsTieBreakers>
 </document>
