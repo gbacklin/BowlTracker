@@ -45,7 +45,8 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         let subtitle = seriesScore(for: key, series: seriesHistory!)
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
+        let accessory = DisclosureIndicator.create(color: UIColor.black, highlightedColor: UIColor.black)
+        cell.accessoryView = accessory
 
         // Configure the cell...
         cell.textLabel?.text = key

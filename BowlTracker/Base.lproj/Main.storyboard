@@ -452,6 +452,8 @@ Enjoy !</string>
                         <rect key="frame" x="0.0" y="0.0" width="375" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="separatorColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" textLabel="0SP-a6-D1Y" detailTextLabel="90b-hx-GJx" style="IBUITableViewCellStyleSubtitle" id="f7e-IV-lSx">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -689,6 +691,6 @@ Enjoy !</string>
         <image name="strike" width="361.41177368164062" height="361.41177368164062"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Vbz-re-pAl"/>
+        <segue reference="gmx-se-xuj"/>
     </inferredMetricsTieBreakers>
 </document>
