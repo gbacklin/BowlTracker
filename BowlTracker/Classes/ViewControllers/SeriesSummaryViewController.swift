@@ -89,7 +89,7 @@ class SeriesSummaryViewController: UIViewController {
 
     func dateToKey(now: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyddMM-hh:mm a"
+        dateFormatter.dateFormat = "yyyyMMdd-hh:mm a"
         
         return dateFormatter.string(from: now)
     }
