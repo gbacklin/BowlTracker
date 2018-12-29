@@ -346,7 +346,7 @@ class ViewController: UIViewController {
             case 10:
                 if frame.previousFrame!.isStrike {
                     frame.previousFrame!.score += frame.ball1Pins.count - frame.ball2Pins.count
-                    frame.score = frame.previousFrame!.score + (10 - frame.ball2Pins.count)
+                    frame.score += frame.ball1Pins.count - frame.ball2Pins.count
                 } else {
                     frame.score += frame.ball1Pins.count - frame.ball2Pins.count
                 }
