@@ -296,6 +296,7 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                         } else {
                             cell.ball1ResultLabel.textColor = UIColor.black
                         }
+                        cell.ball2ResultLabel.textColor = UIColor.black
                     }
                     cell.ball3ResultLabel.text = ""
                 }

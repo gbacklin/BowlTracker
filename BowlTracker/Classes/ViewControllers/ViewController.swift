@@ -342,7 +342,8 @@ class ViewController: UIViewController {
             addNewFrameToGame(frame: frame)
             displayAllScores()
         } else {
-            switch frame.frameNumber {
+            let currentTenthFrameNumber = frame.frameNumber + frame.tenthFrame.count
+            switch currentTenthFrameNumber {
             case 10:
                 if frame.previousFrame!.isStrike {
                     frame.previousFrame!.score += frame.ball1Pins.count - frame.ball2Pins.count
@@ -926,6 +927,7 @@ extension ViewController: UICollectionViewDataSource {
                         } else {
                             cell.ball1ResultLabel.textColor = UIColor.black
                         }
+                        cell.ball2ResultLabel.textColor = UIColor.black
                     }
                     cell.ball3ResultLabel.text = ""
                 }

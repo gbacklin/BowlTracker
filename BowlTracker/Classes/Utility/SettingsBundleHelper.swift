@@ -10,6 +10,17 @@ import UIKit
 
 class SettingsBundleHelper: NSObject {
     
+    class func compileDate() -> Date {
+        let bundleName = Bundle.main.infoDictionary!["CFBundleName"] as? String ?? "Info.plist"
+        if let infoPath = Bundle.main.path(forResource: bundleName, ofType: nil),
+            let infoAttr = try? FileManager.default.attributesOfItem(atPath: infoPath),
+            let infoDate = infoAttr[FileAttributeKey.creationDate] as? Date
+        {
+            return infoDate
+        }
+        return Date()
+    }
+    
     class func setVersionAndBuildDate() {
         let versionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
         let buildString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as! String
@@ -17,7 +28,7 @@ class SettingsBundleHelper: NSObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
         
-        let dateString = dateFormatter.string(from: Date())
+        let dateString = dateFormatter.string(from: compileDate())
         let currentDefaultsVersion = UserDefaults.standard.string(forKey: "version_preference")
         
         if version != currentDefaultsVersion {
