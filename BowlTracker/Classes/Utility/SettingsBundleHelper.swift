@@ -18,9 +18,12 @@ class SettingsBundleHelper: NSObject {
         dateFormatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
         
         let dateString = dateFormatter.string(from: Date())
-
-        UserDefaults.standard.set(version, forKey: "version_preference")
-        UserDefaults.standard.set(dateString, forKey: "date_preference")
+        let currentDefaultsVersion = UserDefaults.standard.string(forKey: "version_preference")
+        
+        if version != currentDefaultsVersion {
+            UserDefaults.standard.set(version, forKey: "version_preference")
+            UserDefaults.standard.set(dateString, forKey: "date_preference")
+        }
     }
 
 }
