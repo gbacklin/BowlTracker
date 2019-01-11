@@ -16,6 +16,8 @@ class SeriesSummaryViewController: UIViewController {
     @IBOutlet weak var series2CollectionView: UICollectionView!
     @IBOutlet weak var series3CollectionView: UICollectionView!
     
+    @IBOutlet weak var anchor: UITextField!
+    
     var textTitle: String?
     var series: [[Frame]]?
     var isHistory: Bool?
@@ -419,12 +421,6 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
     
 }
 
-// MARK: - UICollectionViewDelegate
-
-extension SeriesSummaryViewController: UICollectionViewDelegate {
-
-}
-
 // MARK: - UIView utility
 
 extension UIView {
@@ -459,6 +455,30 @@ extension SeriesSummaryViewController: MFMailComposeViewControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension SeriesSummaryViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let currentGame: [Frame] = series![indexPath.section]
+        var frame = currentGame[indexPath.row]
+        var titleText = "Game \(indexPath.section + 1) Frame \(indexPath.row + 1)"
+        if frame.frameNumber > 9 {
+            if frame.tenthFrame.count < 2 {
+                frame = frame.tenthFrame[0]
+            } else if frame.tenthFrame.count == 2 {
+                frame = frame.tenthFrame[1]
+                titleText = "Game \(indexPath.section + 1) Frame \((indexPath.row + 1) + (frame.tenthFrame.count))"
+            } else {
+                frame = frame.tenthFrame[2]
+                titleText = "Game \(indexPath.section + 1) Frame \((indexPath.row + 1) + (frame.tenthFrame.count))"
+            }
+        }
+        
+        Popover.sharedInstance.present(viewController: self, usingSourceView: seriesSummaryLabel, currentFrame: frame, title: titleText)
+    }
 }
 
 // MARK: - MFMessageComposeViewControllerDelegate

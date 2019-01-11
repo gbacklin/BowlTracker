@@ -22,6 +22,8 @@
 		4EC31276218350C20033EBA0 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC31271218350C10033EBA0 /* Frame.swift */; };
 		4EC31277218350C20033EBA0 /* FrameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC31273218350C10033EBA0 /* FrameCollectionViewCell.swift */; };
 		4EC31278218350C20033EBA0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC31275218350C10033EBA0 /* ViewController.swift */; };
+		4EC8A69321E8FB950080F7AD /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC8A69221E8FB950080F7AD /* Popover.swift */; };
+		4EC8A69521E8FCC30080F7AD /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC8A69421E8FCC30080F7AD /* PopupViewController.swift */; };
 		4EEFE96521D2AE9200FBCD15 /* DisclosureIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEFE96421D2AE9200FBCD15 /* DisclosureIndicator.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,8 @@
 		4EC31271218350C10033EBA0 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		4EC31273218350C10033EBA0 /* FrameCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCollectionViewCell.swift; sourceTree = "<group>"; };
 		4EC31275218350C10033EBA0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4EC8A69221E8FB950080F7AD /* Popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
+		4EC8A69421E8FCC30080F7AD /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		4EEFE96421D2AE9200FBCD15 /* DisclosureIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureIndicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,6 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				4EC31271218350C10033EBA0 /* Frame.swift */,
+				4EC8A69221E8FB950080F7AD /* Popover.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				4E7D154521AB00B1000AA624 /* InstructionsViewController.swift */,
+				4EC8A69421E8FCC30080F7AD /* PopupViewController.swift */,
 				4E2D63E221B9AB05001A712E /* SeriesSummaryViewController.swift */,
 				4E1FB31C21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift */,
 				4EC31275218350C10033EBA0 /* ViewController.swift */,
@@ -255,8 +261,10 @@
 				4E1FB31D21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift in Sources */,
 				4E89FF1E21B883E400F40696 /* SettingsBundleHelper.swift in Sources */,
 				4E921B3F2183504200602A2C /* AppDelegate.swift in Sources */,
+				4EC8A69321E8FB950080F7AD /* Popover.swift in Sources */,
 				4E1FB31B21C9961F00EFCE37 /* PropertyList.swift in Sources */,
 				4E7D154621AB00B1000AA624 /* InstructionsViewController.swift in Sources */,
+				4EC8A69521E8FCC30080F7AD /* PopupViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

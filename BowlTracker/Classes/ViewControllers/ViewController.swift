@@ -112,6 +112,7 @@ class ViewController: UIViewController {
     @IBAction func promptForSummaryDisplay(_ sender: Any) {
         promptForSummaryDisplay(showHistory: true)
     }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
