@@ -40,7 +40,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let keys: [String] = (seriesHistory!.allKeys as! [String]).sorted()
+        let keys: [String] = ((seriesHistory!.allKeys as! [String]).sorted()).reversed()
         let key = keys[indexPath.row]
         let subtitle = seriesScore(for: key, series: seriesHistory!)
 
@@ -61,7 +61,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowSeriesHistorySummary" {
             let indexPath = tableView.indexPathForSelectedRow
-            let keys: [String] = (seriesHistory!.allKeys as! [String]).sorted()
+            let keys: [String] = ((seriesHistory!.allKeys as! [String]).sorted()).reversed()
             let key = keys[indexPath!.row]
             let series: [[Frame]] = seriesHistory!.object(forKey: key) as! [[Frame]]
             let cell = tableView.cellForRow(at: indexPath!)
@@ -78,7 +78,9 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         let series: [[Frame]] = series.object(forKey: key) as! [[Frame]]
         var seriesScore = 0
         var frameScores = ""
-        for game: [Frame] in series {
+        
+        for index in 0...2 {
+            let game = series[index]
             let frame: Frame = game[0]
             frameScores += "\(frame.finalScore) "
             seriesScore += frame.finalScore

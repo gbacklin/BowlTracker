@@ -732,7 +732,9 @@ class ViewController: UIViewController {
     // MARK: - Series methods
     
     func updateSeriesWith(game: [Frame]) {
-        series.append(game)
+        if series.count < 3 {
+            series.append(game)
+        }
     }
     
     // MARK: - Resetting methods
