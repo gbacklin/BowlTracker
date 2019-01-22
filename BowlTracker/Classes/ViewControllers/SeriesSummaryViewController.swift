@@ -237,6 +237,7 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
                 cell.ball3ResultLabel.text = "X"
                 cell.ball3ResultLabel.textColor = UIColor.black
             } else if frame.isSpare {
+                cell.ball2ResultLabel.textColor = UIColor.black
                 cell.ball1ResultLabel.text = ""
                 cell.ball2ResultLabel.text = "\(10 - frame.ball1Pins.count)"
                 if isSplit(pins: frame.ball1Pins) {
