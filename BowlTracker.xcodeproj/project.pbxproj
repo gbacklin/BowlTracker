@@ -22,6 +22,7 @@
 		4EC31276218350C20033EBA0 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC31271218350C10033EBA0 /* Frame.swift */; };
 		4EC31277218350C20033EBA0 /* FrameCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC31273218350C10033EBA0 /* FrameCollectionViewCell.swift */; };
 		4EC31278218350C20033EBA0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC31275218350C10033EBA0 /* ViewController.swift */; };
+		4EC70C7F21FE1FD30046E651 /* SeriesGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC70C7E21FE1FD30046E651 /* SeriesGroup.swift */; };
 		4EC8A69321E8FB950080F7AD /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC8A69221E8FB950080F7AD /* Popover.swift */; };
 		4EC8A69521E8FCC30080F7AD /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EC8A69421E8FCC30080F7AD /* PopupViewController.swift */; };
 		4EEFE96521D2AE9200FBCD15 /* DisclosureIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EEFE96421D2AE9200FBCD15 /* DisclosureIndicator.swift */; };
@@ -58,6 +59,7 @@
 		4EC31271218350C10033EBA0 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		4EC31273218350C10033EBA0 /* FrameCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameCollectionViewCell.swift; sourceTree = "<group>"; };
 		4EC31275218350C10033EBA0 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4EC70C7E21FE1FD30046E651 /* SeriesGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeriesGroup.swift; sourceTree = "<group>"; };
 		4EC8A69221E8FB950080F7AD /* Popover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Popover.swift; sourceTree = "<group>"; };
 		4EC8A69421E8FCC30080F7AD /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		4EEFE96421D2AE9200FBCD15 /* DisclosureIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclosureIndicator.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				4EC31271218350C10033EBA0 /* Frame.swift */,
+				4EC70C7E21FE1FD30046E651 /* SeriesGroup.swift */,
 				4EC8A69221E8FB950080F7AD /* Popover.swift */,
 			);
 			path = Models;
@@ -256,6 +259,7 @@
 				4EEFE96521D2AE9200FBCD15 /* DisclosureIndicator.swift in Sources */,
 				4E2B24E021C29627006A3A37 /* PDFConverter.swift in Sources */,
 				4E2D63E521B9BD9E001A712E /* CustomCollectionReusableView.swift in Sources */,
+				4EC70C7F21FE1FD30046E651 /* SeriesGroup.swift in Sources */,
 				4EC31276218350C20033EBA0 /* Frame.swift in Sources */,
 				4EC31277218350C20033EBA0 /* FrameCollectionViewCell.swift in Sources */,
 				4E1FB31D21C9A6EC00EFCE37 /* ShowSeriesHistoryTableViewController.swift in Sources */,
