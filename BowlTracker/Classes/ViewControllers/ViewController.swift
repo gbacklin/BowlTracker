@@ -816,7 +816,7 @@ class ViewController: UIViewController {
     // MARK: - Utility methods
     
     func isSplit(pins: [Int]) -> Bool {
-        let splits = ["7-10", "7-9", "8-10", "5-7", "5-10", "6-7", "5-7-10", "3-7", "2-10", "2-7", "3-10", "2-7-10", "3-7-10", "4-7-10", "6-7-10", "4-6-7-10", "4-5", "5-6", "7-8", "9-10", "4-6-7-8-10", "4-6-7-9-10", "3-4-6-7-10", "2-4-6-7-10", "2-4-6-7-8-10", "3-4-6-7-9-10", "4-10", "2-3", "4-6", "8-9", "6-7", "6-8", "4-9", "2-6", "3-4", "4-7-9", "2-6-8", "2-4-9", "3-6-8", "3-6-7", "3-6-8", "2-4-10", "6-8-10", "3-4-9", "4-6-9", "4-6-9-10", "4-6-7-8", "4-6-8", "3-6-7-10", "2-4-7-10", "3-9-10", "2-7-8", "4-6-10", "4-6-7", "2-8-10", "3-7-9", "2-7-8", "3-9-10", "4-5-7", "5-6-10"]
+        let splits = ["7-10", "7-9", "8-10", "5-7", "5-10", "6-7", "5-7-10", "3-7", "2-10", "2-7", "3-10", "2-7-10", "3-7-10", "4-7-10", "6-7-10", "4-6-7-10", "4-5", "5-6", "7-8", "9-10", "4-6-7-8-10", "4-6-7-9-10", "3-4-6-7-10", "2-4-6-7-10", "2-4-6-7-8-10", "3-4-6-7-9-10", "4-10", "2-3", "4-6", "8-9", "6-7", "6-8", "4-9", "2-6", "3-4", "4-7-9", "2-6-8", "2-4-9", "3-6-8", "3-6-7", "3-6-8", "2-4-10", "6-8-10", "3-4-9", "4-6-9", "4-6-9-10", "4-6-7-8", "4-6-8", "3-6-7-10", "2-4-7-10", "3-9-10", "2-7-8", "4-6-10", "4-6-7", "2-8-10", "3-7-9", "2-7-8", "3-9-10", "4-5-7", "5-6-10", "2-5-7-8", "3-5-9-10"]
 
         var split = ""
         for pin in pins.sorted() {
@@ -877,6 +877,7 @@ extension ViewController: UICollectionViewDataSource {
                 } else {
                     cell.ball2ResultLabel.textColor = UIColor.black
                 }
+                cell.ball3ResultLabel.textColor = UIColor.black
                 cell.ball3ResultLabel.text = "/"
             } else {
                 cell.ball1ResultLabel.text = ""
@@ -950,6 +951,7 @@ extension ViewController: UICollectionViewDataSource {
                     } else {
                         cell.ball2ResultLabel.textColor = UIColor.black
                     }
+                    cell.ball3ResultLabel.textColor = UIColor.black
                     cell.ball3ResultLabel.text = "/"
                 } else {
                     let previousFrame = subFrame!.previousFrame
@@ -1024,8 +1026,8 @@ extension ViewController: UICollectionViewDataSource {
                     } else {
                         cell.ball2ResultLabel.textColor = UIColor.black
                     }
-                    cell.ball3ResultLabel.text = "/"
                     cell.ball3ResultLabel.textColor = UIColor.black
+                    cell.ball3ResultLabel.text = "/"
                 } else {
                     cell.ball1ResultLabel.text = "X"
                     cell.ball2ResultLabel.text = "X"
