@@ -63,11 +63,17 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
 
         let stringTimestamp: String = seriesGroup.timeStamps![0] as! String
         
+        var groupAverage = 0.0
+        var groupSerieseTotal = 0
+        for seriesAverage in seriesGroup.groupAverage {
+            groupSerieseTotal += seriesAverage as! Int
+        }
+        groupAverage = round(Double((groupSerieseTotal/seriesGroup.groupAverage.count)/3))
         let date = dateFormatter.date(from: stringTimestamp)!
         let components = calendar.dateComponents([.year, .month, .day, .hour], from: date)
         let month = months[components.month!-1]
         
-        return "\(String(describing: month)) \(String(describing: components.year!))"
+        return "\(String(describing: month)) \(String(describing: components.year!)) - Avg (\(Int(groupAverage)))"
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -76,7 +82,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         let seriesArray: NSArray = seriesGroupHistory.object(forKey: groupKey) as! NSArray
         let series: [[Frame]] = seriesArray.object(at: indexPath.row) as! [[Frame]]
 
-        let subtitle = seriesScore(for: series)
+        let subtitle = seriesScoreTitle(for: series)
         let seriesGroup: SeriesGroup = seriesGroupTimeStampHistory.object(forKey: groupKey) as! SeriesGroup
         let timestamp: String = seriesGroup.timeStamps?.object(at: indexPath.row) as! String
 
@@ -126,7 +132,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         return "\(frameScores) - (\(seriesScore))"
     }
     
-    func seriesScore(for series: [[Frame]]) -> String? {
+    func seriesScoreTitle(for series: [[Frame]]) -> String? {
         var seriesScore = 0
         var frameScores = ""
         
@@ -140,6 +146,18 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         return "\(frameScores) - (\(seriesScore))"
     }
     
+    func seriesScore(for series: [[Frame]]) -> Int? {
+        var seriesScore = 0
+        
+        for index in 0...2 {
+            let game = series[index]
+            let frame: Frame = game[0]
+            seriesScore += frame.finalScore
+        }
+        
+        return seriesScore
+    }
+
     // MARK: - Grouping
     
     func groupSeriesHistory() {
@@ -159,11 +177,13 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
                 let seriesGroup: SeriesGroup = seriesGroupTimeStampHistory.object(forKey: groupKey) as! SeriesGroup
                 let series: [[Frame]] = seriesHistory!.object(forKey: key) as! [[Frame]]
                 let timestamps: NSMutableArray = seriesGroup.timeStamps!
+                
                 groups.add(series)
                 timestamps.add(key)
 
                 seriesGroup.groups = groups
                 seriesGroup.timeStamps = timestamps
+                seriesGroup.groupAverage.add(seriesScore(for: series)!)
 
                 seriesGroupHistory.setObject(groups, forKey: groupKey as NSCopying)
                 seriesGroupTimeStampHistory.setObject(seriesGroup, forKey: groupKey as NSCopying)
@@ -177,7 +197,8 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
                 let seriesGroup = SeriesGroup()
                 seriesGroup.groups = groups
                 seriesGroup.timeStamps = timestamps
-                
+                seriesGroup.groupAverage.add(seriesScore(for: series)!)
+
                 seriesGroupHistory.setObject(groups, forKey: groupKey as NSCopying)
                 seriesGroupTimeStampHistory.setObject(seriesGroup, forKey: groupKey as NSCopying)
             }
