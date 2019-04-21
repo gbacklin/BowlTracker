@@ -18,6 +18,8 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.rightBarButtonItem = editButtonItem
+
         tableView.backgroundView = UIImageView(image: UIImage(named: "lane")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 5))
         groupSeriesHistory()
     }
@@ -97,6 +99,51 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            let groupKeys: [String] = ((seriesGroupHistory.allKeys as! [String]).sorted()).reversed()
+            let groupKey = groupKeys[indexPath.section]
+            let seriesArray: NSMutableArray = (seriesGroupHistory.object(forKey: groupKey) as! NSArray).mutableCopy() as! NSMutableArray
+            
+            // Remove from group history
+            seriesArray.removeObject(at: indexPath.row)
+            if seriesArray.count > 0 {
+                seriesGroupHistory.setObject(seriesArray, forKey: groupKey as NSCopying)
+            } else {
+                seriesGroupHistory.removeObject(forKey: groupKey)
+                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+           }
+            
+            // Remove from series history
+            let cell = tableView.cellForRow(at: indexPath)
+            let key = cell!.textLabel?.text
+            let mutableSeriesHistory: NSMutableDictionary = seriesHistory!.mutableCopy() as! NSMutableDictionary
+            mutableSeriesHistory.removeObject(forKey: key as Any)
+            seriesHistory = mutableSeriesHistory
+            
+            let result = PropertyList.writePropertyListFromDictionary(filename: "SeriesHistory" as NSString, plistDict: seriesHistory! as NSDictionary)
+            if result {
+                print("Series was saved")
+            } else {
+                print("Series was not saved")
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            //After this, you must reload data of table
+            tableView.reloadData()
+            
+            tableView.endUpdates()
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

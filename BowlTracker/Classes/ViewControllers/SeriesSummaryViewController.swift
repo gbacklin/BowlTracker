@@ -143,20 +143,23 @@ class SeriesSummaryViewController: UIViewController {
         if let history = PropertyList.dictionaryFromPropertyList(filename: "SeriesHistory") {
             dict = history as! [String : [[Frame]]]
         }
-        dict[key] = series!
         
-        let result = PropertyList.writePropertyListFromDictionary(filename: filename as NSString, plistDict: dict as NSDictionary)
-        if result {
-            message = "Series was saved"
-        } else {
-            message = "Series was not saved"
+        let existingSeries = dict[key]
+        if existingSeries == nil {
+            dict[key] = series!
+            
+            let result = PropertyList.writePropertyListFromDictionary(filename: filename as NSString, plistDict: dict as NSDictionary)
+            if result {
+                message = "Series was saved"
+            } else {
+                message = "Series was not saved"
+            }
+            let alertController: UIAlertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
         }
-        let alertController: UIAlertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-
     }
 
     // MARK: - Utility methods
