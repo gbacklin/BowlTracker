@@ -143,26 +143,29 @@ class SeriesSummaryViewController: UIViewController {
         if let history = PropertyList.dictionaryFromPropertyList(filename: "SeriesHistory") {
             dict = history as! [String : [[Frame]]]
         }
-        dict[key] = series!
         
-        let result = PropertyList.writePropertyListFromDictionary(filename: filename as NSString, plistDict: dict as NSDictionary)
-        if result {
-            message = "Series was saved"
-        } else {
-            message = "Series was not saved"
+        let existingSeries = dict[key]
+        if existingSeries == nil {
+            dict[key] = series!
+            
+            let result = PropertyList.writePropertyListFromDictionary(filename: filename as NSString, plistDict: dict as NSDictionary)
+            if result {
+                message = "Series was saved"
+            } else {
+                message = "Series was not saved"
+            }
+            let alertController: UIAlertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
         }
-        let alertController: UIAlertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
-        
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-
     }
 
     // MARK: - Utility methods
     
     func isSplit(pins: [Int]) -> Bool {
-        let splits = ["7-10", "7-9", "8-10", "5-7", "5-10", "6-7", "5-7-10", "3-7", "2-10", "2-7", "3-10", "2-7-10", "3-7-10", "4-7-10", "6-7-10", "4-6-7-10", "4-5", "5-6", "7-8", "9-10", "4-6-7-8-10", "4-6-7-9-10", "3-4-6-7-10", "2-4-6-7-10", "2-4-6-7-8-10", "3-4-6-7-9-10", "4-10", "2-3", "4-6", "8-9", "6-7", "6-8", "4-9", "2-6", "3-4", "4-7-9", "2-6-8", "2-4-9", "3-6-8", "3-6-7", "3-6-8", "2-4-10", "6-8-10", "3-4-9", "4-6-9", "4-6-9-10", "4-6-7-8", "4-6-8", "3-6-7-10", "2-4-7-10", "3-9-10", "2-7-8", "4-6-10", "4-6-7", "2-8-10", "3-7-9", "2-7-8", "3-9-10", "4-5-7", "5-6-10", "2-5-7-8", "3-5-9-10"]
+        let splits = ["7-10", "7-9", "8-10", "5-7", "5-10", "6-7", "5-7-10", "3-7", "2-10", "2-7", "3-10", "2-7-10", "3-7-10", "4-7-10", "6-7-10", "4-6-7-10", "4-5", "5-6", "7-8", "9-10", "4-6-7-8-10", "4-6-7-9-10", "3-4-6-7-10", "2-4-6-7-10", "2-4-6-7-8-10", "3-4-6-7-9-10", "4-10", "2-3", "4-6", "8-9", "6-7", "6-8", "4-9", "2-6", "3-4", "4-7-9", "2-6-8", "2-4-9", "3-6-8", "3-6-7", "3-6-8", "2-4-10", "6-8-10", "3-4-9", "4-6-9", "4-6-9-10", "4-6-7-8", "4-6-8", "3-6-7-10", "2-4-7-10", "3-9-10", "2-7-8", "4-6-10", "4-6-7", "2-8-10", "3-7-9", "2-7-8", "3-9-10", "4-5-7", "5-6-10", "2-5-7-8", "3-5-9-10", "4-7-9-10", "6-7-9-10", "4-7-8-10", "4-6-7-9", "4-6-7-9", "4-6-8-10", "2-5-7", "3-5-10"]
 
         var split = ""
         for pin in pins.sorted() {

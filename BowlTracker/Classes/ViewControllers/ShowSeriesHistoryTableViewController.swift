@@ -18,6 +18,8 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.rightBarButtonItem = editButtonItem
+
         tableView.backgroundView = UIImageView(image: UIImage(named: "lane")?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 5))
         groupSeriesHistory()
     }
@@ -63,11 +65,17 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
 
         let stringTimestamp: String = seriesGroup.timeStamps![0] as! String
         
+        var groupAverage = 0.0
+        var groupSerieseTotal = 0
+        for seriesAverage in seriesGroup.groupAverage {
+            groupSerieseTotal += seriesAverage as! Int
+        }
+        groupAverage = round(Double((groupSerieseTotal/seriesGroup.groupAverage.count)/3))
         let date = dateFormatter.date(from: stringTimestamp)!
         let components = calendar.dateComponents([.year, .month, .day, .hour], from: date)
         let month = months[components.month!-1]
         
-        return "\(String(describing: month)) \(String(describing: components.year!))"
+        return "\(String(describing: month)) \(String(describing: components.year!)) - Avg (\(Int(groupAverage)))"
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -76,7 +84,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         let seriesArray: NSArray = seriesGroupHistory.object(forKey: groupKey) as! NSArray
         let series: [[Frame]] = seriesArray.object(at: indexPath.row) as! [[Frame]]
 
-        let subtitle = seriesScore(for: series)
+        let subtitle = seriesScoreTitle(for: series)
         let seriesGroup: SeriesGroup = seriesGroupTimeStampHistory.object(forKey: groupKey) as! SeriesGroup
         let timestamp: String = seriesGroup.timeStamps?.object(at: indexPath.row) as! String
 
@@ -91,6 +99,51 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            let groupKeys: [String] = ((seriesGroupHistory.allKeys as! [String]).sorted()).reversed()
+            let groupKey = groupKeys[indexPath.section]
+            let seriesArray: NSMutableArray = (seriesGroupHistory.object(forKey: groupKey) as! NSArray).mutableCopy() as! NSMutableArray
+            
+            // Remove from group history
+            seriesArray.removeObject(at: indexPath.row)
+            if seriesArray.count > 0 {
+                seriesGroupHistory.setObject(seriesArray, forKey: groupKey as NSCopying)
+            } else {
+                seriesGroupHistory.removeObject(forKey: groupKey)
+                tableView.deleteSections(IndexSet(integer: indexPath.section), with: .fade)
+           }
+            
+            // Remove from series history
+            let cell = tableView.cellForRow(at: indexPath)
+            let key = cell!.textLabel?.text
+            let mutableSeriesHistory: NSMutableDictionary = seriesHistory!.mutableCopy() as! NSMutableDictionary
+            mutableSeriesHistory.removeObject(forKey: key as Any)
+            seriesHistory = mutableSeriesHistory
+            
+            let result = PropertyList.writePropertyListFromDictionary(filename: "SeriesHistory" as NSString, plistDict: seriesHistory! as NSDictionary)
+            if result {
+                print("Series was saved")
+            } else {
+                print("Series was not saved")
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            //After this, you must reload data of table
+            tableView.reloadData()
+            
+            tableView.endUpdates()
+        } else if editingStyle == .insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -126,7 +179,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         return "\(frameScores) - (\(seriesScore))"
     }
     
-    func seriesScore(for series: [[Frame]]) -> String? {
+    func seriesScoreTitle(for series: [[Frame]]) -> String? {
         var seriesScore = 0
         var frameScores = ""
         
@@ -140,6 +193,18 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         return "\(frameScores) - (\(seriesScore))"
     }
     
+    func seriesScore(for series: [[Frame]]) -> Int? {
+        var seriesScore = 0
+        
+        for index in 0...2 {
+            let game = series[index]
+            let frame: Frame = game[0]
+            seriesScore += frame.finalScore
+        }
+        
+        return seriesScore
+    }
+
     // MARK: - Grouping
     
     func groupSeriesHistory() {
@@ -159,11 +224,13 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
                 let seriesGroup: SeriesGroup = seriesGroupTimeStampHistory.object(forKey: groupKey) as! SeriesGroup
                 let series: [[Frame]] = seriesHistory!.object(forKey: key) as! [[Frame]]
                 let timestamps: NSMutableArray = seriesGroup.timeStamps!
+                
                 groups.add(series)
                 timestamps.add(key)
 
                 seriesGroup.groups = groups
                 seriesGroup.timeStamps = timestamps
+                seriesGroup.groupAverage.add(seriesScore(for: series)!)
 
                 seriesGroupHistory.setObject(groups, forKey: groupKey as NSCopying)
                 seriesGroupTimeStampHistory.setObject(seriesGroup, forKey: groupKey as NSCopying)
@@ -177,7 +244,8 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
                 let seriesGroup = SeriesGroup()
                 seriesGroup.groups = groups
                 seriesGroup.timeStamps = timestamps
-                
+                seriesGroup.groupAverage.add(seriesScore(for: series)!)
+
                 seriesGroupHistory.setObject(groups, forKey: groupKey as NSCopying)
                 seriesGroupTimeStampHistory.setObject(seriesGroup, forKey: groupKey as NSCopying)
             }

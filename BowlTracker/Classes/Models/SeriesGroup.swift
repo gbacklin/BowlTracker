@@ -11,4 +11,5 @@ import UIKit
 class SeriesGroup: NSObject {
     var groups: NSMutableArray?
     var timeStamps: NSMutableArray?
+    var groupAverage = NSMutableArray()
 }
