@@ -964,7 +964,11 @@ extension ViewController: UICollectionViewDataSource {
                         } else {
                             cell.ball3ResultLabel.text = "\(10 - (10 - (subFrame!.ball1Pins.count - subFrame!.ball2Pins.count)))"
                         }
-                        cell.ball2ResultLabel.textColor = UIColor.black
+                        if isSplit(pins: subFrame!.ball1Pins) {
+                            cell.ball2ResultLabel.textColor = UIColor.red
+                        } else {
+                            cell.ball2ResultLabel.textColor = UIColor.black
+                        }
                     } else if previousFrame!.isSpare {
                         cell.ball1ResultLabel.text = "\(10 - previousFrame!.ball1Pins.count)"
                         cell.ball2ResultLabel.text = "/"
