@@ -192,9 +192,9 @@ extension SeriesSummaryViewController {
 // MARK: - UICollectionViewDataSource
 
 extension SeriesSummaryViewController: UICollectionViewDataSource {
-    func indexTitles(for collectionView: UICollectionView) -> [String]? {
-        return ["Game 1", "Game 2", "Game 3"]
-    }
+//    func indexTitles(for collectionView: UICollectionView) -> [String]? {
+//        return ["Game 1", "Game 2", "Game 3"]
+//    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         var count = series!.count
