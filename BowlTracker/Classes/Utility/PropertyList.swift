@@ -32,6 +32,12 @@ open class PropertyList: NSObject {
         if let plistPath: String = Bundle.main.path(forResource: filename, ofType: "plist") {
             if let aData: NSData = NSData(contentsOfFile: plistPath as String) {
                 data = NSKeyedUnarchiver.unarchiveObject(with: aData as Data) as? [String : AnyObject]
+                //do {
+                //    data = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSObject.self], from: aData as Data) as? [String : AnyObject]
+                //}
+                //catch let error {
+                //    debugPrint("unarchiveObject(with:) \(error.localizedDescription)")
+                //}
             }
         }
         
@@ -67,6 +73,9 @@ open class PropertyList: NSObject {
         let bundlePath: NSString = rootPath.appendingPathComponent(fname as String) as NSString
         
         let aData: Data = NSKeyedArchiver.archivedData(withRootObject: plistDict)
+        //if let archivedData = try? NSKeyedArchiver.archivedData(withRootObject: plistDict, requiringSecureCoding: true) {
+        //    try? archivedData.write(to: URL(fileURLWithPath: bundlePath as String))
+        //}
         
         return ((try? aData.write(to: URL(fileURLWithPath: bundlePath as String), options: [.atomic])) != nil)
     }
