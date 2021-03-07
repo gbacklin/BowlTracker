@@ -32,12 +32,14 @@ open class PropertyList: NSObject {
         if let plistPath: String = Bundle.main.path(forResource: filename, ofType: "plist") {
             if let aData: NSData = NSData(contentsOfFile: plistPath as String) {
                 data = NSKeyedUnarchiver.unarchiveObject(with: aData as Data) as? [String : AnyObject]
-                //do {
-                //    data = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSObject.self], from: aData as Data) as? [String : AnyObject]
-                //}
-                //catch let error {
-                //    debugPrint("unarchiveObject(with:) \(error.localizedDescription)")
-                //}
+                /*
+                 do {
+                     data = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSObject.self], from: aData as Data) as? [String : AnyObject]
+                 }
+                 catch let error {
+                     debugPrint("unarchiveObject(with:) \(error.localizedDescription)")
+                 }
+                 */
             }
         }
         
@@ -50,6 +52,15 @@ open class PropertyList: NSObject {
         if let bundlePath: NSString = bundlePathFor(filename: filename, fileExtension: "plist") {
             if let aData: NSData = NSData(contentsOfFile: bundlePath as String) {
                 result = NSKeyedUnarchiver.unarchiveObject(with: aData as Data) as? NSDictionary
+                /*
+                 do {
+                     result = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSObject.self], from: aData as Data) as? NSDictionary
+                 }
+                 catch let error {
+                     debugPrint("unarchiveObject(with:) \(error.localizedDescription)")
+                 }
+                 */
+
             }
         }
         
@@ -62,6 +73,14 @@ open class PropertyList: NSObject {
         if let bundlePath: NSString = bundlePathFor(filename: filename, fileExtension: "plist") {
             let aData: NSData = NSKeyedArchiver.archivedData(withRootObject: plistDict) as NSData
             result = aData.write(toFile: bundlePath as String, atomically: true)
+            /*
+            do {
+                let aData = try NSKeyedArchiver.archivedData(withRootObject: plistDict, requiringSecureCoding: false)
+                result = ((try? aData.write(to: URL(fileURLWithPath: bundlePath as String), options: [.atomic])) != nil)
+            } catch let error {
+                debugPrint("archivedData(with:) \(error.localizedDescription)")
+            }
+            */
         }
         
         return result
@@ -71,13 +90,22 @@ open class PropertyList: NSObject {
         let fname: NSString = NSString(format: "%@.plist", filename)
         let rootPath: NSString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
         let bundlePath: NSString = rootPath.appendingPathComponent(fname as String) as NSString
-        
+        var success = false
         let aData: Data = NSKeyedArchiver.archivedData(withRootObject: plistDict)
+        success = ((try? aData.write(to: URL(fileURLWithPath: bundlePath as String), options: [.atomic])) != nil)
+        /*
+        do {
+            let aData = try NSKeyedArchiver.archivedData(withRootObject: plistDict, requiringSecureCoding: false)
+            success = ((try? aData.write(to: URL(fileURLWithPath: bundlePath as String), options: [.atomic])) != nil)
+        } catch let error {
+            debugPrint("archivedData(with:) \(error.localizedDescription)")
+        }
+         */
         //if let archivedData = try? NSKeyedArchiver.archivedData(withRootObject: plistDict, requiringSecureCoding: true) {
         //    try? archivedData.write(to: URL(fileURLWithPath: bundlePath as String))
         //}
         
-        return ((try? aData.write(to: URL(fileURLWithPath: bundlePath as String), options: [.atomic])) != nil)
+        return success
     }
 
     
