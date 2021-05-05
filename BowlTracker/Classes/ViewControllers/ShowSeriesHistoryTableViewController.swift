@@ -135,10 +135,10 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
             }
             
             tableView.deleteRows(at: [indexPath], with: .fade)
-            //After this, you must reload data of table
-            tableView.reloadData()
-            
             tableView.endUpdates()
+            //After this, you must reload data of table
+            groupSeriesHistory()
+            tableView.reloadData()
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
