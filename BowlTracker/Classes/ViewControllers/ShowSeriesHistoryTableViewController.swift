@@ -156,7 +156,8 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
             let series: [[Frame]] = seriesArray.object(at: indexPath!.row) as! [[Frame]]
             let cell = tableView.cellForRow(at: indexPath!)
             let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
-            controller.textTitle = cell!.detailTextLabel?.text
+            controller.seriesDateTextTitle = cell!.textLabel?.text
+            controller.seriesTextTitle = cell!.detailTextLabel?.text
             controller.series = series
             controller.isHistory = true
        }

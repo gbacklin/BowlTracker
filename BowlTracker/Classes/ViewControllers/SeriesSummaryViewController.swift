@@ -11,6 +11,7 @@ import MessageUI
 
 class SeriesSummaryViewController: UIViewController {
     
+    @IBOutlet weak var seriesDateLabel: UILabel!
     @IBOutlet weak var seriesSummaryLabel: UILabel!
     @IBOutlet weak var series1CollectionView: UICollectionView!
     @IBOutlet weak var series2CollectionView: UICollectionView!
@@ -18,7 +19,8 @@ class SeriesSummaryViewController: UIViewController {
     
     @IBOutlet weak var anchor: UITextField!
     
-    var textTitle: String?
+    var seriesDateTextTitle: String?
+    var seriesTextTitle: String?
     var series: [[Frame]]?
     var isHistory: Bool?
 
@@ -26,8 +28,18 @@ class SeriesSummaryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        seriesSummaryLabel.text = textTitle
-        
+        if let stringTimestamp = seriesDateTextTitle {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMdd-hh:mm a"
+            let date = dateFormatter.date(from: stringTimestamp)!
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            seriesDateLabel.text = dateFormatter.string(from: date)
+        } else {
+            seriesDateLabel.text = seriesDateTextTitle
+        }
+
+        seriesSummaryLabel.text = seriesTextTitle
+
         let sendButton = UIBarButtonItem(title: "Send", style: .plain, target: self, action: #selector(SeriesSummaryViewController.send(_:)))
         navigationItem.rightBarButtonItem = sendButton
     }
@@ -39,7 +51,7 @@ class SeriesSummaryViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        textTitle = title
+        seriesTextTitle = title
         title = " "
     }
 

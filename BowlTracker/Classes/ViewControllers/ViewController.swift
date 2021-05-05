@@ -122,7 +122,7 @@ class ViewController: UIViewController {
             controller.textTitle = title
         } else if segue.identifier == "ShowSeriesSummary" {
             let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
-            controller.textTitle = title
+            controller.seriesTextTitle = title
             controller.series = series
             controller.isHistory = false
         } else if segue.identifier == "ShowSeriesHistory" {
