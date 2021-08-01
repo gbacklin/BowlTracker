@@ -24,9 +24,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var helpBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var showSeriesButton: UIButton!
+    @IBOutlet weak var tournamentButton: UIButton!
     
     var bowlingPins: [UIButton] = [UIButton]()
     var currentFrame: Frame = Frame()
+    var currentFrameTitle = ""
     var currentGame: [Frame] = [Frame]()
     var undoGame: [Frame] = [Frame]()
     var isTenthFrame = false
@@ -34,6 +36,8 @@ class ViewController: UIViewController {
     var isGameCompleted = false
     var textTitle: String?
     var seriesHistory: NSDictionary?
+    var maxGames = 3
+    var seriesSummaryTitle = ""
 
     // MARK: - View Lifecycle
     
@@ -42,9 +46,33 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let appDefaults = [String:AnyObject]()
         UserDefaults.standard.register(defaults: appDefaults)
-
-        initializePinArray(subviews: pinStackView)
-        newGame()
+        let (game, maxGame, frameTitle, frame, currentSeries, frameNum) = readTempSeries(filename: "Temp")
+        if game.count > 0 {
+            self.tournamentButton.isHidden = true
+            currentGame = game
+            maxGames = maxGame
+            currentFrame = frame
+            series = currentSeries
+            textTitle = "Game \(series.count + 1) - Frame \(frameNum)"
+            initializePinArray(subviews: pinStackView, frameNumber: frame.frameNumber)
+            updateScoreDisplay()
+        } else {
+            if currentSeries.count > 0 {
+                self.tournamentButton.isHidden = true
+                currentGame = game
+                maxGames = maxGame
+                textTitle = frameTitle
+                currentFrame = frame
+                series = currentSeries
+                textTitle = "Game \(series.count + 1) - Frame \(frameNum)"
+                initializePinArray(subviews: pinStackView, frameNumber: frame.frameNumber)
+                updateScoreDisplay()
+            } else {
+                self.tournamentButton.isHidden = false
+                newGame()
+                initializePinArray(subviews: pinStackView, frameNumber: 1)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,8 +88,36 @@ class ViewController: UIViewController {
     }
 
     // MARK: - @IBAction methods
+    @IBAction func setTournamentOrLeague(_ sender: Any) {
+        let alertController: UIAlertController = UIAlertController(title: "Mail Action", message: "Enter the number of games in the tournament", preferredStyle: .alert)
+        alertController.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "# Games"
+            textField.keyboardType = .decimalPad
+        }
+
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [self] alert -> Void in
+            if let textField = alertController.textFields?[0] {
+                self.tournamentButton.isHidden = true
+                if textField.text!.count > 0 {
+                    self.maxGames = Int(textField.text!)!
+                } else {
+                    self.maxGames = 3
+                }
+            }
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+            (action : UIAlertAction!) -> Void in })
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+
+        alertController.preferredAction = saveAction
+
+        present(alertController, animated: true, completion: nil)
+    }
     
     @IBAction func addPinsLeft(_ sender: UIButton) {
+        tournamentButton.isHidden = true
         if ball1Button.isEnabled == false && ball2Button.isEnabled == false {
             ball1Button.isEnabled = true
             strikeButton.isEnabled = false
@@ -100,6 +156,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func ballThrown(_ sender: UIButton) {
+        tournamentButton.isHidden = true
         currentFrame.isStrike = false
         currentFrame.isSpare = false
         processBallThrown(throwType: sender.tag, isFrameReset: false)
@@ -122,9 +179,10 @@ class ViewController: UIViewController {
             controller.textTitle = title
         } else if segue.identifier == "ShowSeriesSummary" {
             let controller: SeriesSummaryViewController = segue.destination as! SeriesSummaryViewController
-            controller.seriesTextTitle = title
+            controller.seriesTextTitle = seriesSummaryTitle
             controller.series = series
             controller.isHistory = false
+            controller.maxGames = maxGames
         } else if segue.identifier == "ShowSeriesHistory" {
             let controller: ShowSeriesHistoryTableViewController = segue.destination as! ShowSeriesHistoryTableViewController
             controller.textTitle = "History"
@@ -564,7 +622,56 @@ class ViewController: UIViewController {
             }
         }
         
+        saveTempSeries(filename: "Temp", tempGame: currentGame, currentFrame: currentFrame)
         updateScoreDisplay()
+    }
+    
+    func saveTempSeries(filename: String, tempGame: [Frame], currentFrame: Frame) {
+        var dict = [String : AnyObject]()
+        
+        dict["tempGame"] = tempGame as AnyObject
+        dict["maxGames"] = maxGames as AnyObject
+        dict["title"] = textTitle as AnyObject
+        dict["currentFrame"] = currentFrame as AnyObject
+        dict["series"] = series as AnyObject
+        dict["frameNumber"] = currentFrame.frameNumber as AnyObject
+
+        let result = PropertyList.writePropertyListFromDictionary(filename: filename as NSString, plistDict: dict as NSDictionary)
+        if result {
+            debugPrint("Saved temp series")
+        } else {
+            debugPrint("Saved temp series failed")
+        }
+    }
+    
+    func readTempSeries(filename: String) -> ([Frame], Int, String, Frame, series: [[Frame]], frameNumber: Int) {
+        var dict = [String : AnyObject]()
+        var temp: [Frame] = [Frame]()
+        var maxGame: Int = 0
+        var frameTitle: String = ""
+        var frame = Frame()
+        var series: [[Frame]] = [[Frame]]()
+        var frameNum: Int = 0
+
+        if let history = PropertyList.dictionaryFromPropertyList(filename: filename as NSString) {
+            dict = history as! [String : AnyObject]
+            temp = dict["tempGame"] as! [Frame]
+            maxGame = dict["maxGames"] as! Int
+            frameTitle = dict["title"] as! String
+            frame = dict["currentFrame"] as! Frame
+            series = dict["series"] as! [[Frame]]
+            frameNum = dict["frameNumber"] as! Int
+        }
+        return (temp, maxGame, frameTitle, frame, series, frameNum)
+    }
+    
+    func deleteTempGame(filename: String) {
+        let result = PropertyList.delete("Temp")
+        if result {
+            debugPrint("Saved temp series")
+        } else {
+            debugPrint("Saved temp series failed")
+        }
     }
     
     // MARK: - Display methods
@@ -589,7 +696,7 @@ class ViewController: UIViewController {
     
     func promptForGameOption() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        if series.count < 3 {
+        if series.count < maxGames {
             let resetFrameAction = UIAlertAction(title: "Reset Last Frame", style: .default) {[weak self] (action) in
                 self!.resetCurrentFrame()
             }
@@ -613,9 +720,10 @@ class ViewController: UIViewController {
     
     func promptForSummaryDisplay(showHistory: Bool) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
+
         if series.count > 0 {
             let showSeriesSummary = UIAlertAction(title: "Show Series Summary", style: .default) {[weak self] (action) in
+                self!.deleteTempGame(filename: "Temp")
                 self!.performSegue(withIdentifier: "ShowSeriesSummary", sender: self!)
             }
             actionSheet.addAction(showSeriesSummary)
@@ -628,6 +736,7 @@ class ViewController: UIViewController {
             if let history = seriesHistory {
                 if history.count > 0 {
                     let showSeriesHistory = UIAlertAction(title: "Show Series History", style: .default) {[weak self] (action) in
+                        self!.deleteTempGame(filename: "Temp")
                         self!.performSegue(withIdentifier: "ShowSeriesHistory", sender: self!)
                     }
                     actionSheet.addAction(showSeriesHistory)
@@ -640,11 +749,11 @@ class ViewController: UIViewController {
     
     // MARK: - Pin Control methods
     
-    func initializePinArray(subviews: UIStackView) {
-        currentFrame.frameNumber = 1
+    func initializePinArray(subviews: UIStackView, frameNumber: Int) {
+        currentFrame.frameNumber = frameNumber
         for subView in subviews.subviews {
             if let stackView = subView as? UIStackView {
-                initializePinArray(subviews: stackView)
+                initializePinArray(subviews: stackView, frameNumber: frameNumber)
             } else if let button = subView as? UIButton {
                 let image = UIImage(named: "gray")
                 button.setBackgroundImage(image, for: .normal)
@@ -681,6 +790,7 @@ class ViewController: UIViewController {
         textTitle = title
         isGameCompleted = false
         resetPins()
+        saveTempSeries(filename: "Temp", tempGame: currentGame, currentFrame: currentFrame)
     }
     
     func updateGame(frame: Frame) {
@@ -698,9 +808,10 @@ class ViewController: UIViewController {
         
         displayAllScores()
         
-        if self.series.count < 2 {
+        if self.series.count < maxGames - 1 {
             let alert = UIAlertController(title: nil, message: "New Game ?", preferredStyle: .alert)
             let yesAction = UIAlertAction(title: "Yes", style: .default) {(action) in
+                weakSelf.saveTempSeries(filename: "Temp", tempGame: weakSelf.currentGame, currentFrame: weakSelf.currentFrame)
                 weakSelf.updateSeriesWith(game: weakSelf.currentGame)
                 weakSelf.isTenthFrame = false
                 weakSelf.collectionView.reloadData()
@@ -710,6 +821,7 @@ class ViewController: UIViewController {
             let noAction = UIAlertAction(title: "No", style: .cancel) { (action) in
                 weakSelf.resetPins()
                 weakSelf.strikeButton.isEnabled = false
+                weakSelf.deleteTempGame(filename: "Temp")
             }
             alert.addAction(yesAction)
             alert.addAction(noAction)
@@ -717,6 +829,21 @@ class ViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         } else {
             self.updateSeriesWith(game: self.currentGame)
+            var seriesScore = ""
+            var seriesTotal = 0
+            for index in 0...self.series.count-1 {
+                let game: [Frame] = self.series[index]
+                let score = game[0].finalScore
+                seriesScore.append("\(score) ")
+                seriesTotal += score
+            }
+            seriesSummaryTitle = "\(seriesScore) - \(seriesTotal)"
+            if self.series.count > 3 {
+                title = "\(self.series.count) Games - \(seriesTotal)"
+            } else {
+                title = "\(seriesScore) - \(seriesTotal)"
+            }
+            /*
             let game1 = self.series[0]
             let game2 = self.series[1]
             let game3 = self.series[2]
@@ -724,7 +851,8 @@ class ViewController: UIViewController {
             let game2Score = game2[0].finalScore
             let game3Score = game3[0].finalScore
             title = "\(game1Score) \(game2Score) \(game3Score) - (\(game1Score+game2Score+game3Score))"
-            
+            */
+            deleteTempGame(filename: "Temp")
             promptForSummaryDisplay(showHistory: false)
         }
     }
@@ -732,7 +860,7 @@ class ViewController: UIViewController {
     // MARK: - Series methods
     
     func updateSeriesWith(game: [Frame]) {
-        if series.count < 3 {
+        if series.count < maxGames {
             series.append(game)
         }
     }
@@ -760,11 +888,11 @@ class ViewController: UIViewController {
                 }
             }
         } else {
-            removeAllFrmesInGame()
+            removeAllFramesInGame()
         }
     }
     
-    func removeAllFrmesInGame() {
+    func removeAllFramesInGame() {
         currentFrame = Frame()
         currentGame.removeAll()
         undoGame.removeAll()
@@ -778,7 +906,11 @@ class ViewController: UIViewController {
     func restartGame() {
         let alert = UIAlertController(title: "New Game", message: "Selecting yes, will remove all frames from this game.", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .default) {[weak self] (action) in
-            self!.removeAllFrmesInGame()
+            self!.removeAllFramesInGame()
+            self!.maxGames = 3
+            self!.seriesSummaryTitle = ""
+            self!.tournamentButton.isHidden = false
+            self!.deleteTempGame(filename: "Temp")
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -798,6 +930,10 @@ class ViewController: UIViewController {
             self!.series.removeAll()
             self!.isGameCompleted = false
             self!.shouldShowSeriesButton()
+            self!.maxGames = self!.maxGames
+            self!.seriesSummaryTitle = ""
+            self!.tournamentButton.isHidden = false
+            self!.saveTempSeries(filename: "Temp", tempGame: self!.currentGame, currentFrame: self!.currentFrame)
 
             self!.newGame()
             self!.updateScoreDisplay()

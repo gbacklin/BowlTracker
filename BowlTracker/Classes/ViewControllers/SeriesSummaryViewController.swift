@@ -13,9 +13,6 @@ class SeriesSummaryViewController: UIViewController {
     
     @IBOutlet weak var seriesDateLabel: UILabel!
     @IBOutlet weak var seriesSummaryLabel: UILabel!
-    @IBOutlet weak var series1CollectionView: UICollectionView!
-    @IBOutlet weak var series2CollectionView: UICollectionView!
-    @IBOutlet weak var series3CollectionView: UICollectionView!
     
     @IBOutlet weak var anchor: UITextField!
     
@@ -23,6 +20,7 @@ class SeriesSummaryViewController: UIViewController {
     var seriesTextTitle: String?
     var series: [[Frame]]?
     var isHistory: Bool?
+    var maxGames = 0
 
     // MARK: - View lifecycle
     
@@ -163,6 +161,8 @@ class SeriesSummaryViewController: UIViewController {
             let result = PropertyList.writePropertyListFromDictionary(filename: filename as NSString, plistDict: dict as NSDictionary)
             if result {
                 message = "Series was saved"
+                let success = PropertyList.delete("temp")
+                debugPrint("Deleting temp file: \(success)")
             } else {
                 message = "Series was not saved"
             }
@@ -210,8 +210,8 @@ extension SeriesSummaryViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         var count = series!.count
-        if count > 3 {
-            count = 3
+        if count > maxGames {
+            count = maxGames
         }
         return count
     }

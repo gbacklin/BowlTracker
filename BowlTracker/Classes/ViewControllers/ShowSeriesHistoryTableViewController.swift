@@ -67,10 +67,17 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         
         var groupAverage = 0.0
         var groupSerieseTotal = 0
+        var groupTotalGames = 0
+        var groupsCount = 0
+        var seriesGames: [[Any]] = [[Any]]()
         for seriesAverage in seriesGroup.groupAverage {
+            seriesGames = seriesGroup.groups![groupsCount] as! [[Any]]
             groupSerieseTotal += seriesAverage as! Int
+            groupTotalGames += seriesGames.count
+            groupsCount += 1
         }
-        groupAverage = round(Double((groupSerieseTotal/seriesGroup.groupAverage.count)/3))
+        
+        groupAverage = round(Double((groupSerieseTotal/groupTotalGames)))
         let date = dateFormatter.date(from: stringTimestamp)!
         let components = calendar.dateComponents([.year, .month, .day, .hour], from: date)
         let month = months[components.month!-1]
@@ -130,6 +137,8 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
             let result = PropertyList.writePropertyListFromDictionary(filename: "SeriesHistory" as NSString, plistDict: seriesHistory! as NSDictionary)
             if result {
                 print("Series was saved")
+                let success = PropertyList.delete("temp")
+                debugPrint("Deleting temp file: \(success)")
             } else {
                 print("Series was not saved")
             }
@@ -159,6 +168,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
             controller.seriesDateTextTitle = cell!.textLabel?.text
             controller.seriesTextTitle = cell!.detailTextLabel?.text
             controller.series = series
+            controller.maxGames = series.count
             controller.isHistory = true
        }
     }
@@ -170,7 +180,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         var seriesScore = 0
         var frameScores = ""
         
-        for index in 0...2 {
+        for index in 0...series.count-1 {
             let game = series[index]
             let frame: Frame = game[0]
             frameScores += "\(frame.finalScore) "
@@ -184,7 +194,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
         var seriesScore = 0
         var frameScores = ""
         
-        for index in 0...2 {
+        for index in 0...series.count-1 {
             let game = series[index]
             let frame: Frame = game[0]
             frameScores += "\(frame.finalScore) "
@@ -197,7 +207,7 @@ class ShowSeriesHistoryTableViewController: UITableViewController {
     func seriesScore(for series: [[Frame]]) -> Int? {
         var seriesScore = 0
         
-        for index in 0...2 {
+        for index in 0...series.count-1 {
             let game = series[index]
             let frame: Frame = game[0]
             seriesScore += frame.finalScore

@@ -148,6 +148,23 @@ open class PropertyList: NSObject {
         return result
     }
 
+    class func delete(_ filename: NSString) -> Bool {
+        let fileManager = FileManager.default
+        let fname: NSString = NSString(format: "%@.plist", filename)
+        let rootPath: NSString = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let bundlePath: NSString = rootPath.appendingPathComponent(fname as String) as NSString
+        var success = false
+        
+        do {
+            try fileManager.removeItem(atPath: bundlePath as String)
+            success = true
+        } catch {
+            success = false
+            debugPrint(error.localizedDescription)
+        }
+        return success
+    }
+    
     // MARK: - Utility methods
     
     private class func bundlePathFor(filename: NSString, fileExtension: NSString) -> NSString? {

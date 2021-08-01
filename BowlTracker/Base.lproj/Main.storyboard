@@ -3,7 +3,7 @@
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18092"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -330,15 +330,26 @@
                                     <action selector="promptForSummaryDisplay:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="Rfw-fv-gLt"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1u-Hn-3Hv">
+                                <rect key="frame" x="16" y="569" width="83" height="30"/>
+                                <state key="normal" title="Tournament">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="setTournamentOrLeague:" destination="a4y-V9-8WZ" eventType="touchUpInside" id="9vx-aT-eGm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lNm-65-HgP"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="lNm-65-HgP" firstAttribute="bottom" secondItem="E1u-Hn-3Hv" secondAttribute="bottom" constant="24" id="5NI-3c-h7d"/>
                             <constraint firstItem="tSD-Wq-tLa" firstAttribute="trailing" secondItem="lNm-65-HgP" secondAttribute="trailing" id="5xn-Dd-4FJ"/>
                             <constraint firstItem="tSD-Wq-tLa" firstAttribute="bottom" secondItem="lNm-65-HgP" secondAttribute="bottom" id="9Jd-3g-sGk"/>
                             <constraint firstItem="lNm-65-HgP" firstAttribute="bottom" secondItem="mbO-lF-sg0" secondAttribute="bottom" constant="20" id="9Pc-fX-Yq4"/>
                             <constraint firstItem="lNm-65-HgP" firstAttribute="trailing" secondItem="Oto-Tt-cbl" secondAttribute="trailing" constant="16" id="9cB-Xe-E12"/>
                             <constraint firstItem="lNm-65-HgP" firstAttribute="bottom" secondItem="AR1-gf-Sdd" secondAttribute="bottom" constant="24" id="Bx7-Iu-k1w"/>
+                            <constraint firstItem="E1u-Hn-3Hv" firstAttribute="leading" secondItem="lNm-65-HgP" secondAttribute="leading" constant="16" id="DWJ-Kh-lRA"/>
                             <constraint firstItem="mbO-lF-sg0" firstAttribute="centerX" secondItem="QL1-Kd-UDD" secondAttribute="centerX" id="HZo-wL-g6V"/>
                             <constraint firstItem="Oto-Tt-cbl" firstAttribute="top" secondItem="lNm-65-HgP" secondAttribute="top" constant="8" id="IRo-bi-DTZ"/>
                             <constraint firstItem="tSD-Wq-tLa" firstAttribute="top" secondItem="lNm-65-HgP" secondAttribute="top" id="O5U-B5-6Vj"/>
@@ -370,6 +381,7 @@
                         <outlet property="showSeriesButton" destination="AR1-gf-Sdd" id="WJn-zy-1NQ"/>
                         <outlet property="spareButton" destination="4Kl-le-2CV" id="Sd6-us-Hts"/>
                         <outlet property="strikeButton" destination="POb-KJ-fbX" id="bia-c8-gEA"/>
+                        <outlet property="tournamentButton" destination="E1u-Hn-3Hv" id="TI0-9b-eIA"/>
                         <segue destination="Spx-8c-mhs" kind="show" identifier="ShowSeriesSummary" id="Vbz-re-pAl"/>
                         <segue destination="2J9-EV-OfT" kind="show" identifier="ShowSeriesHistory" id="0j4-E6-db2"/>
                     </connections>
