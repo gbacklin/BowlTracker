@@ -69,8 +69,8 @@ class ViewController: UIViewController {
                 updateScoreDisplay()
             } else {
                 self.tournamentButton.isHidden = false
-                newGame()
                 initializePinArray(subviews: pinStackView, frameNumber: 1)
+                newGame()
             }
         }
     }
