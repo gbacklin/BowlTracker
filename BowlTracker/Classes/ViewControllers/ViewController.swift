@@ -723,7 +723,6 @@ class ViewController: UIViewController {
 
         if series.count > 0 {
             let showSeriesSummary = UIAlertAction(title: "Show Series Summary", style: .default) {[weak self] (action) in
-                self!.deleteTempGame(filename: "Temp")
                 self!.performSegue(withIdentifier: "ShowSeriesSummary", sender: self!)
             }
             actionSheet.addAction(showSeriesSummary)
@@ -736,7 +735,6 @@ class ViewController: UIViewController {
             if let history = seriesHistory {
                 if history.count > 0 {
                     let showSeriesHistory = UIAlertAction(title: "Show Series History", style: .default) {[weak self] (action) in
-                        self!.deleteTempGame(filename: "Temp")
                         self!.performSegue(withIdentifier: "ShowSeriesHistory", sender: self!)
                     }
                     actionSheet.addAction(showSeriesHistory)
@@ -843,15 +841,6 @@ class ViewController: UIViewController {
             } else {
                 title = "\(seriesScore) - \(seriesTotal)"
             }
-            /*
-            let game1 = self.series[0]
-            let game2 = self.series[1]
-            let game3 = self.series[2]
-            let game1Score = game1[0].finalScore
-            let game2Score = game2[0].finalScore
-            let game3Score = game3[0].finalScore
-            title = "\(game1Score) \(game2Score) \(game3Score) - (\(game1Score+game2Score+game3Score))"
-            */
             deleteTempGame(filename: "Temp")
             promptForSummaryDisplay(showHistory: false)
         }

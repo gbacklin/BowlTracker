@@ -83,6 +83,7 @@ class SeriesSummaryViewController: UIViewController {
         if isHistory == false {
             let saveSeriesAction = UIAlertAction(title: "Save Series", style: .default) {[weak self] (action) in
                 self!.saveSeries(filename: "SeriesHistory")
+                self!.deleteTempGame(filename: "Temp")
             }
             actionSheet.addAction(saveSeriesAction)
         }
@@ -92,6 +93,15 @@ class SeriesSummaryViewController: UIViewController {
     
     // MARK: - Utility
     
+    func deleteTempGame(filename: String) {
+        let result = PropertyList.delete("Temp")
+        if result {
+            debugPrint("Saved temp series")
+        } else {
+            debugPrint("Saved temp series failed")
+        }
+    }
+
     func dateToString(now: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
